@@ -3,11 +3,10 @@ var fs = require('fs');
 var cheerio = require('cheerio'),
     request = require('request'),
     async = require('async'),
-    yaml = require('js-yaml');
+    yaml = require('js-yaml'),
+    minify = require('html-minifier').minify;
 
 var conf = yaml.safeLoad(fs.readFileSync('conf.yml', {encoding: 'utf8'}));
-
-console.log(conf);
 
 request(conf.wrap, function(err, resp, body) {
 
@@ -23,6 +22,26 @@ request(conf.wrap, function(err, resp, body) {
   ], function(err) {
     if(err) return console.error(err);
     console.log('Scripts saved.');
+  });
+
+  // Get HTML to inject
+  async.waterfall([
+    function(next) {
+      next(null, body);
+    },
+    stripHtml,
+    htmlToJs,
+    function(injectable, next) {
+      // Put this in a format saveFiles understands
+      next(null, [{
+        src: injectable,
+        dest: 'bundled/js/markup.js'
+      }]);
+    },
+    saveFiles
+  ], function(err) {
+    if(err) return console.error(err);
+    console.log('Injectable HTML saved.');
   });
 
 });
@@ -89,6 +108,28 @@ function saveFiles(regions, next) {
   async.each(regions, function(region, next) {
     fs.writeFile(region.dest, region.src, {encoding: 'utf8'}, next);
   }, next);
+}
+
+/*
+ * Extract HTML nodes as strings
+ */
+function stripHtml(body, next) {
+  $ = cheerio.load(body);
+
+  // Get the outerHtml of each element
+  async.map(conf.markup, function(node, next) {
+    next(null, $.html($(node)));
+  }, next);
+}
+
+/*
+ * Turn HTML strings into injectable JavaScript
+ */
+function htmlToJs(html, next) {
+  next(null, 'document.write(\'' + minify(html.join('\n'), {
+    collapseWhitespace: true,
+    conservativeCollapse: true
+  }) + '\');');
 }
 
 
