@@ -1,0 +1,25 @@
+{
+  "name": "wrap-scraper",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/statesman/wrap-scraper.git"
+  },
+  "author": "Andrew Chavez <adchavez@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/statesman/wrap-scraper/issues"
+  },
+  "homepage": "https://github.com/statesman/wrap-scraper",
+  "dependencies": {
+    "async": "^0.9.0",
+    "cheerio": "^0.19.0",
+    "js-yaml": "^3.3.0",
+    "request": "^2.55.0"
+  }
+}
