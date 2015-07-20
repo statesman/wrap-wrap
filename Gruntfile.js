@@ -6,14 +6,41 @@ module.exports = function(grunt) {
         options: {
           port: 9500,
           hostname: '*',
-          open: 'http://localhost:9500/test/index.html',
+          base: 'bundled',
+          open: true,
           keepalive: true
         }
+      }
+    },
+
+    ftpush: {
+      stage: {
+        auth: {
+          host: 'host.coxmediagroup.com',
+          port: 21,
+          authKey: 'cmg'
+        },
+        src: 'bundled',
+        dest: '/stage_aas/test/wrap-wrap',
+        simple: true,
+        useList: false
+      },
+      prod: {
+        auth: {
+          host: 'host.coxmediagroup.com',
+          port: 21,
+          authKey: 'cmg'
+        },
+        src: 'bundled',
+        dest: '/prod_aas/projects/test/wrap-wrap',
+        simple: true,
+        useList: false
       }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-ftpush');
 
   grunt.registerTask('default', ['connect']);
 
