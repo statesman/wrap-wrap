@@ -116,6 +116,9 @@ function saveFiles(regions, next) {
 function stripHtml(body, next) {
   $ = cheerio.load(body);
 
+  // Strip all CSS
+  $('style').remove();
+
   // Get the outerHtml of each element
   async.map(conf.markup, function(node, next) {
     next(null, $.html($(node)));
