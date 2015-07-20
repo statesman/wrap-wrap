@@ -44,6 +44,28 @@ request(conf.wrap, function(err, resp, body) {
     console.log('Injectable HTML saved.');
   });
 
+  // Grab inline CSS
+  async.waterfall([
+    function(next) {
+      next(null, body);
+    },
+    function(body, next) {
+      $ = cheerio.load(body);
+      next(null, $('style').text());
+    },
+    function(css, next) {
+      // Put this in a format saveFiles understands
+      next(null, [{
+        src: css,
+        dest: 'bundled/css/styles.css'
+      }]);
+    },
+    saveFiles
+  ], function(err) {
+    if(err) return console.error(err);
+    console.log('CSS saved.');
+  });
+
 });
 
 
