@@ -1,4 +1,4 @@
-wrap: http://www.fe58.myajc.com/wraps/minimalist/
+wrap: http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html
 
 scripts:
   - src: 'head script'
@@ -6,24 +6,20 @@ scripts:
   - src: 'body script'
     dest: 'bundled/js/body.js'
 
-markup:
-  # Janraid markup
-  - '#returnSocial'
-  - '#returnTraditional'
-  - '#socialRegistration'
-  - '#traditionalRegistration'
-  - '#traditionalRegistrationBlank'
-  - '#registrationSuccess'
-  - '#registrationSuccessConfirmed'
-  - '#forgotPassword'
-  - '#forgotPasswordSuccess'
-  - '#mergeAccounts'
-  - '#traditionalAuthenticateMerge'
-  - '#resendVerification'
-  - '#resendVerificationSuccess'
-  - .masthead-login
-  - '#janrain-share'
-  - '#janrainModalOverlay'
-  - '#janrainModal'
-  # Not in the CMG docs, but required
-  - '#signIn'
+# Janraid markup
+- '#flatpage_frame'
+- '#returnSocial'
+- '#returnTraditional'
+- '#socialRegistration'
+- '#traditionalRegistration'
+- '#traditionalRegistrationBlank'
+- '#registrationSuccess'
+- '#registrationSuccessConfirmed'
+- '#forgotPassword'
+- '#forgotPasswordSuccess'
+- '#mergeAccounts'
+- '#traditionalAuthenticateMerge'
+- '#resendVerification'
+- '#resendVerificationSuccess'
+# Not in the CMG docs, but required
+- '#signIn'
