@@ -4,9 +4,18 @@ var cheerio = require('cheerio'),
     request = require('request'),
     async = require('async'),
     yaml = require('js-yaml'),
-    minify = require('html-minifier').minify;
+    minify = require('html-minifier').minify,
+    s3 = require('s3');
 
 var conf = yaml.safeLoad(fs.readFileSync('conf.yml', {encoding: 'utf8'}));
+
+var s3client = s3.createClient({
+  s3Options: {
+    accessKeyId: conf.s3.id,
+    secretAccessKey: conf.s3.key,
+    region: 'us-west-2'
+  },
+});
 
 request(conf.wrap, function(err, resp, body) {
 
@@ -128,7 +137,22 @@ function concatenateFiles(regions, next) {
  */
 function saveFiles(regions, next) {
   async.each(regions, function(region, next) {
-    fs.writeFile(region.dest, region.src, {encoding: 'utf8'}, next);
+    fs.writeFileSync(region.dest, region.src, {encoding: 'utf8'});
+
+    var s3uploader = s3client.uploadFile({
+      localFile: region.dest,
+      s3Params: {
+        Key: region.dest.replace('bundled/',''),
+        Bucket: conf.s3.bucket,
+        ACL: 'public-read'
+      },
+    });
+    s3uploader.on('error', function(err) {
+      next(err);
+    });
+    s3uploader.on('end', function() {
+      next(null);
+    });
   }, next);
 }
 

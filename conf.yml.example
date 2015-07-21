@@ -6,20 +6,26 @@ scripts:
   - src: 'body script'
     dest: 'bundled/js/body.js'
 
-# Janraid markup
-- '#flatpage_frame'
-- '#returnSocial'
-- '#returnTraditional'
-- '#socialRegistration'
-- '#traditionalRegistration'
-- '#traditionalRegistrationBlank'
-- '#registrationSuccess'
-- '#registrationSuccessConfirmed'
-- '#forgotPassword'
-- '#forgotPasswordSuccess'
-- '#mergeAccounts'
-- '#traditionalAuthenticateMerge'
-- '#resendVerification'
-- '#resendVerificationSuccess'
-# Not in the CMG docs, but required
-- '#signIn'
+markup:
+  # Janraid markup
+  - '#flatpage_frame'
+  - '#returnSocial'
+  - '#returnTraditional'
+  - '#socialRegistration'
+  - '#traditionalRegistration'
+  - '#traditionalRegistrationBlank'
+  - '#registrationSuccess'
+  - '#registrationSuccessConfirmed'
+  - '#forgotPassword'
+  - '#forgotPasswordSuccess'
+  - '#mergeAccounts'
+  - '#traditionalAuthenticateMerge'
+  - '#resendVerification'
+  - '#resendVerificationSuccess'
+  # Not in the CMG docs, but required
+  - '#signIn'
+
+s3:
+  bucket: 'wrap.hookem.com.s3-website-us-west-2.amazonaws.com'
+  id: ''
+  key: ''
