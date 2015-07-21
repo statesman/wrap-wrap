@@ -1,10 +1,10 @@
 if( typeof window.plate !== 'undefined' ) {
   window.plate.togglePremium = function( authorized ){
     if( authorized || !plate.premium ) {
-      cmg.query('.invitation_chunk, .janusNotAuthorized').hide();
+      cmg.query('#flatpage_frame, .janusNotAuthorized').hide();
       cmg.query('.premium-content').removeClass('premium-content');
     } else{
-      cmg.query('.invitation_chunk, .janusNotAuthorized').show();
+      cmg.query('#flatpage_frame, .janusNotAuthorized').show();
     }
   };
 }
