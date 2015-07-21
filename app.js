@@ -40,6 +40,7 @@ request(conf.wrap, function(err, resp, body) {
       next(null, body);
     },
     stripHtml,
+    wrapHtml,
     htmlToJs,
     function(injectable, next) {
       // Put this in a format saveFiles understands
@@ -186,6 +187,15 @@ function stripHtml(body, next) {
   async.map(conf.markup, function(node, next) {
     next(null, $.html($(node)));
   }, next);
+}
+
+/*
+ * Wrap HTML with a namespaced <div>
+ */
+function wrapHtml(html, next) {
+  html.unshift('<!-- Begin CMG wrap -->\n<div id="' + conf.namespace + '">');
+  html.push('</div>\n<!-- End CMG wrap -->');
+  next(null, html);
 }
 
 /*

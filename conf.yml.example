@@ -1,5 +1,7 @@
 wrap: http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html
 
+namespace: 'cmg-wrap-aas'
+
 scripts:
   - src: 'head script'
     dest: 'js/head.js'
