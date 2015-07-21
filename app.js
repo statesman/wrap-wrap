@@ -27,6 +27,7 @@ request(conf.wrap, function(err, resp, body) {
     stripScripts,
     downloadScripts,
     concatenateFiles,
+    applyOverrides,
     saveFiles
   ], function(err) {
     if(err) return console.error(err);
@@ -44,7 +45,7 @@ request(conf.wrap, function(err, resp, body) {
       // Put this in a format saveFiles understands
       next(null, [{
         src: injectable,
-        dest: 'bundled/js/markup.js'
+        dest: 'js/markup.js'
       }]);
     },
     saveFiles
@@ -66,9 +67,10 @@ request(conf.wrap, function(err, resp, body) {
       // Put this in a format saveFiles understands
       next(null, [{
         src: css,
-        dest: 'bundled/css/styles.css'
+        dest: 'css/styles.css'
       }]);
     },
+    applyOverrides,
     saveFiles
   ], function(err) {
     if(err) return console.error(err);
@@ -133,16 +135,31 @@ function concatenateFiles(regions, next) {
 }
 
 /*
+ * Apply overrides (basically just append them to the end)
+ */
+function applyOverrides(regions, next) {
+  async.map(regions, function(region, next) {
+    var override = 'overrides/' + region.dest;
+
+    if(fs.existsSync(override)) {
+      region.src += fs.readFileSync(override, {encoding: 'utf8'});
+    }
+
+    next(null, region);
+  }, next);
+}
+
+/*
  * Save a file
  */
 function saveFiles(regions, next) {
   async.each(regions, function(region, next) {
-    fs.writeFileSync(region.dest, region.src, {encoding: 'utf8'});
+    fs.writeFileSync('bundled/' + region.dest, region.src, {encoding: 'utf8'});
 
     var s3uploader = s3client.uploadFile({
-      localFile: region.dest,
+      localFile: 'bundled/' + region.dest,
       s3Params: {
-        Key: region.dest.replace('bundled/',''),
+        Key: region.dest,
         Bucket: conf.s3.bucket,
         ACL: 'public-read'
       },

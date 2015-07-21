@@ -1,0 +1,21 @@
+#flatpage_frame {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+#flatpage_frame .flatpage_invitation_chunk {
+  background-image: none;
+  background-color: #fff;
+  background-color: rgba(255,255,255,0.65);
+}
+.flatpage_invitation_chunk .cmPremiumWrap {
+  margin: 75px auto;
+  width: 431px;
+  box-shadow: 0 0 70px rgba(0,0,0,0.25);
+}
+.premium-content {
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  z-index: -1;
+  position: relative;
+}
