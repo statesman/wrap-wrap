@@ -5,7 +5,8 @@ var cheerio = require('cheerio'),
     async = require('async'),
     yaml = require('js-yaml'),
     minify = require('html-minifier').minify,
-    s3 = require('s3');
+    s3 = require('s3'),
+    less = require('less');
 
 var conf = yaml.safeLoad(fs.readFileSync('conf.yml', {encoding: 'utf8'}));
 
@@ -27,7 +28,7 @@ request(conf.wrap, function(err, resp, body) {
     stripScripts,
     downloadScripts,
     concatenateFiles,
-    applyOverrides,
+    overrideJs,
     saveFiles
   ], function(err) {
     if(err) return console.error(err);
@@ -71,7 +72,8 @@ request(conf.wrap, function(err, resp, body) {
         dest: 'css/styles.css'
       }]);
     },
-    applyOverrides,
+    namespaceCss,
+    overrideCss,
     saveFiles
   ], function(err) {
     if(err) return console.error(err);
@@ -136,9 +138,9 @@ function concatenateFiles(regions, next) {
 }
 
 /*
- * Apply overrides (basically just append them to the end)
+ * Apply JS overrides (basically just append them to the end)
  */
-function applyOverrides(regions, next) {
+function overrideJs(regions, next) {
   async.map(regions, function(region, next) {
     var override = 'overrides/' + region.dest;
 
@@ -147,6 +149,30 @@ function applyOverrides(regions, next) {
     }
 
     next(null, region);
+  }, next);
+}
+
+/*
+ * Apply CSS overrides (basically just render LESS and append)
+ */
+function overrideCss(regions, next) {
+  async.map(regions, function(region, next) {
+    var override = 'overrides/' + region.dest.replace('.css', '.less');
+
+    if(fs.existsSync(override)) {
+      var override_less = '\n\n/********** Begin custom overrides **********/\n';
+      override_less += ('@namespace: ~"' + conf.namespace + '";\n');
+      override_less += fs.readFileSync(override, {encoding: 'utf8'});
+
+      less.render(override_less, function(err, output) {
+        if(err) return next(err);
+        region.src += output.css;
+        next(null, region);
+      });
+    }
+    else {
+      next(null, region);
+    }
   }, next);
 }
 
@@ -206,6 +232,23 @@ function htmlToJs(html, next) {
     collapseWhitespace: true,
     conservativeCollapse: true
   }) + '\');');
+}
+
+/*
+ * Namespace the CSS using LESS
+ */
+function namespaceCss(regions, next) {
+  async.map(regions, function(css, next) {
+    var wrapped = '#' + conf.namespace + '{\n';
+      wrapped += css.src;
+      wrapped += '\n}';
+
+    less.render(wrapped, function(err, output) {
+      if(err) return next(err);
+      css.src = output.css;
+      next(null, css);
+    });
+  }, next);
 }
 
 

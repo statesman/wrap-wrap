@@ -1,215 +1,193 @@
-
-.header .header-logo  {
-    box-sizing: content-box;
+#cmg-wrap-aas .header .header-logo {
+  box-sizing: content-box;
 }
-.header a {
-    color: transparent;
+#cmg-wrap-aas .header a {
+  color: transparent;
 }
-.header .right .header-text:hover {
-    border-color: transparent;
+#cmg-wrap-aas .header .right .header-text:hover {
+  border-color: transparent;
 }
-.section-navigation {
-    position: fixed;
-    top: 42px;
+#cmg-wrap-aas .section-navigation {
+  position: fixed;
+  top: 42px;
 }
-.section-header {
-    display: none;
+#cmg-wrap-aas .section-header {
+  display: none;
 }
-#story-body .premium-content .story .section-title {
-    margin-top: 0px;
+#cmg-wrap-aas #story-body .premium-content .story .section-title {
+  margin-top: 0px;
 }
-
-    a {
-        text-decoration: none;
-    }
-    #flatpage_frame {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        line-height: 20px;
-    }
-    .janusNotAuthorized {
-        display: inline-block;
-    }
-
-    .flatpage_invitation_chunk {
-        overflow-y: hidden !important;
-        overflow-x: hidden !important;
-        background-image: url("http://media.cmgdigital.com/shared/media/2015-05-18-13-31-16/web/common/images/paywall/paywall-background.jpeg");
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: right;
-        background-position: center center;
-    }
-
-    .cmPremiumWrap {
-        border: 1px solid #0163ac;
-        padding: 2px;
-        margin: 20px 0;
-    }
-
-    .flatpage_invitation_chunk .cmPremiumWrap {
-        margin: 12px auto;
-        width: 431px;
-    }
-
-    .flatpage_invitation_chunk .janusNotAuthorized {
-        display: block;
-    }
-
-    .cmPremium {
-        border: 2px solid #0163ac;
-        background: #fff;
-    }
-
-    .cmPremium .cmPremiumOption {
-        padding: 10px;
-    }
-
-    .cmPremium .cmPremiumOption .description {
-        float: left;
-        width: 60%;
-        padding: 0;
-    }
-
-    .cmPremium .cmPremiumOption.cmPass img{
-        float: left;
-        padding-right: 10px;
-    }
-
-    .cmPremium .description {
-        padding: 0 20px 12px 18px;
-        width: auto;
-        float: none;
-    }
-
-    .cmPremium .cmPremiumHeader {
-        padding: 12px 12px 0 18px;
-        font-size: 22px;
-        line-height: 28px;
-        font-weight: bold;
-        color: #000;
-    }
-
-    .cmPremium .cmPremiumButton {
-        display: block;
-        width: 132px;
-        float: right;
-        margin-left: 10px;
-        padding: 6px 0;
-        background: #003f74;
-        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#004276), to(#0066b0));
-        background: -webkit-linear-gradient(top, #0066b0, #004276);
-        background: -moz-linear-gradient(top, #0066b0, #004276);
-        background: -ms-linear-gradient(top, #0066b0, #004276);
-        background: -o-linear-gradient(top, #0066b0, #004276);
-        color: #fff;
-        border: 1px solid #00009c;
-        text-align: center;
-        font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
-        font-weight: normal;
-        -webkit-border-radius: 6px;
-        -moz-border-radius: 6px;
-        border-radius: 6px;
-    }
-
-    .cmPremium .cmPremiumOption.cmPass .cmPremiumButton {
-        background: #19612c;
-        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2d952f), to(#19612c));
-        background: -webkit-linear-gradient(top, #2d952f, #19612c);
-        background: -moz-linear-gradient(top, #2d952f, #19612c);
-        background: -ms-linear-gradient(top, #2d952f, #19612c);
-        background: -o-linear-gradient(top, #2d952f, #19612c);
-    }
-
-    a.cmPremiumButton:hover {
-        text-decoration: none;
-    }
-
-    .cmPremiumDivider {
-        border-top: 2px dotted #ccc;
-    }
-
-    .cmPremium .advertisements {
-        padding: 20px 0;
-        border-top: 2px dotted #ccc;
-    }
-
-    .cmPremium .advertisements a,
-    .cmPremium .advertisements span {
-        display: block;
-        float: left;
-        padding: 0 10px 0 18px;
-        font-size: 11px;
-        color: #666;
-        text-transform: none;
-    }
-
-    .cmPremium .advertisements img {
-        height: 32px;
-    }
-
-    .clearfix:after {
-        clear: both;
-        content: ' ';
-        display: block;
-        font-size: 0;
-        line-height: 0;
-        visibility: hidden;
-        width: 0;
-        height: 0;
-    }
-
-    * html.clearfix {
-        height: 1%;
-    }
-
-    .clearfix {
-        display: block;
-    }
-
-    .roadblock {
-        padding: 0;
-        border: 0;
-    }
-
-    @media (max-width: 599px) {
-        .cmPremium .cmPremiumOption .description {
-            width: 65%;
-        }
-
-        .flatpage_invitation_chunk .cmPremiumWrap {
-            width: 90%;
-        }
-    }
-
-    @media (max-width: 481px) {
-        .cmPremium .cmPremiumOption .description {
-            display: block;
-            width: auto;
-            float: none;
-        }
-
-        .cmPremium .cmPremiumOption.cmPass .description {
-            display: block;
-            width: auto;
-            float: none;
-        }
-
-        .cmPremium .cmPremiumButton {
-            float: none;
-            clear: left;
-            margin: 5px auto;
-        }
-
-        .cmPremium .advertisements a,
-        .cmPremium .advertisements span {
-            padding: 0 10px;
-        }
-    }
+#cmg-wrap-aas a {
+  text-decoration: none;
+}
+#cmg-wrap-aas #flatpage_frame {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+}
+#cmg-wrap-aas .janusNotAuthorized {
+  display: inline-block;
+}
+#cmg-wrap-aas .flatpage_invitation_chunk {
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
+  background-image: url("http://media.cmgdigital.com/shared/media/2015-05-18-13-31-16/web/common/images/paywall/paywall-background.jpeg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+  background-position: center center;
+}
+#cmg-wrap-aas .cmPremiumWrap {
+  border: 1px solid #0163ac;
+  padding: 2px;
+  margin: 20px 0;
+}
+#cmg-wrap-aas .flatpage_invitation_chunk .cmPremiumWrap {
+  margin: 12px auto;
+  width: 431px;
+}
+#cmg-wrap-aas .flatpage_invitation_chunk .janusNotAuthorized {
+  display: block;
+}
+#cmg-wrap-aas .cmPremium {
+  border: 2px solid #0163ac;
+  background: #fff;
+}
+#cmg-wrap-aas .cmPremium .cmPremiumOption {
+  padding: 10px;
+}
+#cmg-wrap-aas .cmPremium .cmPremiumOption .description {
+  float: left;
+  width: 60%;
+  padding: 0;
+}
+#cmg-wrap-aas .cmPremium .cmPremiumOption.cmPass img {
+  float: left;
+  padding-right: 10px;
+}
+#cmg-wrap-aas .cmPremium .description {
+  padding: 0 20px 12px 18px;
+  width: auto;
+  float: none;
+}
+#cmg-wrap-aas .cmPremium .cmPremiumHeader {
+  padding: 12px 12px 0 18px;
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: bold;
+  color: #000;
+}
+#cmg-wrap-aas .cmPremium .cmPremiumButton {
+  display: block;
+  width: 132px;
+  float: right;
+  margin-left: 10px;
+  padding: 6px 0;
+  background: #003f74;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#004276), to(#0066b0));
+  background: -webkit-linear-gradient(top, #0066b0, #004276);
+  background: -moz-linear-gradient(top, #0066b0, #004276);
+  background: -ms-linear-gradient(top, #0066b0, #004276);
+  background: -o-linear-gradient(top, #0066b0, #004276);
+  color: #fff;
+  border: 1px solid #00009c;
+  text-align: center;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+#cmg-wrap-aas .cmPremium .cmPremiumOption.cmPass .cmPremiumButton {
+  background: #19612c;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2d952f), to(#19612c));
+  background: -webkit-linear-gradient(top, #2d952f, #19612c);
+  background: -moz-linear-gradient(top, #2d952f, #19612c);
+  background: -ms-linear-gradient(top, #2d952f, #19612c);
+  background: -o-linear-gradient(top, #2d952f, #19612c);
+}
+#cmg-wrap-aas a.cmPremiumButton:hover {
+  text-decoration: none;
+}
+#cmg-wrap-aas .cmPremiumDivider {
+  border-top: 2px dotted #ccc;
+}
+#cmg-wrap-aas .cmPremium .advertisements {
+  padding: 20px 0;
+  border-top: 2px dotted #ccc;
+}
+#cmg-wrap-aas .cmPremium .advertisements a,
+#cmg-wrap-aas .cmPremium .advertisements span {
+  display: block;
+  float: left;
+  padding: 0 10px 0 18px;
+  font-size: 11px;
+  color: #666;
+  text-transform: none;
+}
+#cmg-wrap-aas .cmPremium .advertisements img {
+  height: 32px;
+}
+#cmg-wrap-aas .clearfix:after {
+  clear: both;
+  content: ' ';
+  display: block;
+  font-size: 0;
+  line-height: 0;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+#cmg-wrap-aas * html.clearfix {
+  height: 1%;
+}
+#cmg-wrap-aas .clearfix {
+  display: block;
+}
+#cmg-wrap-aas .roadblock {
+  padding: 0;
+  border: 0;
+}
+@media (max-width: 599px) {
+  #cmg-wrap-aas .cmPremium .cmPremiumOption .description {
+    width: 65%;
+  }
+  #cmg-wrap-aas .flatpage_invitation_chunk .cmPremiumWrap {
+    width: 90%;
+  }
+}
+@media (max-width: 481px) {
+  #cmg-wrap-aas .cmPremium .cmPremiumOption .description {
+    display: block;
+    width: auto;
+    float: none;
+  }
+  #cmg-wrap-aas .cmPremium .cmPremiumOption.cmPass .description {
+    display: block;
+    width: auto;
+    float: none;
+  }
+  #cmg-wrap-aas .cmPremium .cmPremiumButton {
+    float: none;
+    clear: left;
+    margin: 5px auto;
+  }
+  #cmg-wrap-aas .cmPremium .advertisements a,
+  #cmg-wrap-aas .cmPremium .advertisements span {
+    padding: 0 10px;
+  }
+}
+/********** Begin custom overrides **********/
 html {
   position: relative;
 }
-#flatpage_frame {
+.premium-content {
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  z-index: -1;
+  position: relative;
+}
+#cmg-wrap-aas #flatpage_frame {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -219,20 +197,14 @@ html {
   height: 100%;
   z-index: 10000;
 }
-#flatpage_frame .flatpage_invitation_chunk {
+#cmg-wrap-aas #flatpage_frame .flatpage_invitation_chunk {
   background-image: none;
   background-color: #fff;
-  background-color: rgba(255,255,255,0.65);
+  background-color: rgba(255, 255, 255, 0.65);
   height: 100%;
 }
-.flatpage_invitation_chunk .cmPremiumWrap {
+#cmg-wrap-aas .flatpage_invitation_chunk .cmPremiumWrap {
   margin: 75px auto;
   width: 431px;
-  box-shadow: 0 0 70px rgba(0,0,0,0.25);
-}
-.premium-content {
-  filter: blur(3px);
-  -webkit-filter: blur(3px);
-  z-index: -1;
-  position: relative;
+  box-shadow: 0 0 70px rgba(0, 0, 0, 0.25);
 }
