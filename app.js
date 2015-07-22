@@ -26,6 +26,7 @@ request(conf.wrap, function(err, resp, body) {
       next(null, body);
     },
     stripScripts,
+    writeManifest,
     downloadScripts,
     concatenateFiles,
     overrideJs,
@@ -250,6 +251,34 @@ function namespaceCss(regions, next) {
       next(null, css);
     });
   }, next);
+}
+
+/*
+ * Write a file to manifest.json that identifies all the
+ * JavaScript files that are included in the output
+ */
+function writeManifest(regions, next) {
+  var toAppend = regions.map(function(region) {
+    var files = region.src.map(function(script) {
+      var file = {
+        type: script.type
+      };
+      if(script.type === 'inline') {
+        file.excerpt = script.content.substring(0,49);
+      }
+      else {
+        file.url = script.url;
+      }
+      return file;
+    });
+    return {
+      dest: region.dest,
+      files: files
+    };
+  });
+  fs.writeFileSync('bundled/js/manifest.json', JSON.stringify(toAppend), {encoding: 'utf8'});
+
+  next(null, regions);
 }
 
 
