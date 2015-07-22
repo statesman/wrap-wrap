@@ -2,11 +2,13 @@ html {
   position: relative;
 }
 
-.premium-content {
-  filter: blur(3px);
-  -webkit-filter: blur(3px);
-  z-index: -1;
-  position: relative;
+.roadblocked {
+  .premium-content {
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+    z-index: -1;
+    position: relative;
+  }
 }
 
 #@{namespace} {
@@ -19,6 +21,7 @@ html {
     width: 100%;
     height: 100%;
     z-index: 10000;
+    display: none;
   }
   #flatpage_frame .flatpage_invitation_chunk {
     background-image: none;

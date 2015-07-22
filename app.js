@@ -206,8 +206,9 @@ function saveFiles(regions, next) {
 function stripHtml(body, next) {
   $ = cheerio.load(body);
 
-  // Strip all CSS
+  // Strip all CSS, including some inline styles
   $('style').remove();
+  $('#flatpage_invitation').removeAttr('style');
 
   // Get the outerHtml of each element
   async.map(conf.markup, function(node, next) {

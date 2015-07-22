@@ -514,3 +514,8 @@ if(window.plate && plate.premium){
     if(flipper.is_active('plate_share_code_active'))
         plate.authHandlers.push(plate.shareCodeAuthHandler);
 }
+// Ensure that the premium setting from the
+// head overrides the one in the body
+if(typeof plate !== 'undefined' && typeof plate._premium !== 'undefined') {
+  plate.premium = plate._premium;
+}
