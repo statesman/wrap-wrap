@@ -6,6 +6,7 @@ if( typeof window.plate !== 'undefined' ) {
   plate.togglePremium = function( authorized ){
     if( authorized || !plate.premium ) {
       cmg.query('body').removeClass('roadblocked');
+      cmg.query('#flatpage_frame').remove();
     } else{
       cmg.query('body').addClass('roadblocked');
       cmg.query('#flatpage_frame, .janusNotAuthorized').fadeIn();
