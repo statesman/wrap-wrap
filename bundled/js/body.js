@@ -15,6 +15,16 @@ s.parentNode.insertBefore(fbds, s);
 window._fbq = window._fbq || []; 
 window._fbq.push(["track", "PixelInitialized", {}]); 
 ;
+
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','//connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '1039650726068308');
+fbq('track', 'PageView');
+;
 plate.premium = true;;
 //<![CDATA[
             
@@ -477,6 +487,11 @@ cmg.s_coxnews.eVar16 = "non-mobile site";
             labels:".newspaper"
         });
     ;
+
+            if (window._satellite) {
+                _satellite.pageBottom();
+            }
+        ;
 if(window.plate && plate.premium){
     /* If a plate wrap, add premium auth handler */
     plate.generateShareCode = function(authorized){
