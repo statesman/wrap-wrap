@@ -6,6 +6,12 @@ if( typeof window.plate !== 'undefined' ) {
   // Override the togglePremium handler to better align with our
   // markup, styles
   plate.togglePremium = function( authorized ){
+    if( authorized ) {
+      cmg.query('body').addClass('cmg-authed');
+    }
+    else {
+      cmg.query('body').removeClass('cmg-authed');
+    }
     if( authorized || !plate.premium ) {
       cmg.query('body').removeClass('roadblocked');
       cmg.query('#flatpage_frame').remove();
