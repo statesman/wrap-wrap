@@ -7,7 +7,8 @@ var cheerio = require('cheerio'),
     minify = require('html-minifier').minify,
     s3 = require('s3'),
     less = require('less'),
-    mime = require('mime-types');
+    mime = require('mime-types'),
+    UglifyJS = require('uglify-js');
 
 var conf = yaml.safeLoad(fs.readFileSync('conf.yml', {encoding: 'utf8'}));
 
@@ -166,6 +167,11 @@ function overrideJs(scripts, next) {
   // Append the HTML
   scripts.src += fs.readFileSync('bundled/js/markup.js', {encoding: 'utf8'});
 
+  scripts.src = UglifyJS.minify(scripts.src, {
+    fromString: true,
+    mangle: false
+  }).code;
+
   next(null, scripts);
 }
 
@@ -180,9 +186,11 @@ function overrideCss(styles, next) {
     override_less += ('@namespace: ~"' + conf.namespace + '";\n');
     override_less += fs.readFileSync(override, {encoding: 'utf8'});
 
-    less.render(override_less, function(err, output) {
+    styles.src += override_less;
+
+    less.render(styles.src, { compress: true }, function(err, output) {
       if(err) return next(err);
-      styles.src += output.css;
+      styles.src = output.css;
       next(null, styles);
     });
   }
