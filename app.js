@@ -206,7 +206,7 @@ function saveFiles(item, next) {
   fs.writeFileSync('bundled/' + item.dest, item.src, {encoding: 'utf8'});
 
   var s3uploader = s3client.uploadFile({
-    localFile: 'bundled/' + item.dest + '.gz',
+    localFile: 'bundled/' + item.dest,
     s3Params: {
       Key: item.dest,
       Bucket: conf.s3.bucket,
