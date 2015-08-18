@@ -3,8 +3,10 @@ wrap: https://s3-us-west-2.amazonaws.com/wrap.hookem.com/minimalistwrap-081815.h
 namespace: 'cmg-wrap-aas'
 
 scripts:
-  - src: 'script'
-    dest: 'js/scripts.js'
+  src: 'script'
+  dest: 'js/scripts.js'
+  blacklist:
+  - '/web/common/premium/js/hoverIntent.js'
 
 markup:
   # Janraid markup

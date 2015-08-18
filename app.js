@@ -31,10 +31,10 @@ request(conf.wrap, function(err, resp, body) {
     htmlToJs,
     function(injectable, next) {
       // Put this in a format saveFiles understands
-      next(null, [{
+      next(null, {
         src: injectable,
         dest: 'js/markup.js'
-      }]);
+      });
     },
     saveFiles,
     function(next) {
@@ -63,10 +63,10 @@ request(conf.wrap, function(err, resp, body) {
     },
     function(css, next) {
       // Put this in a format saveFiles understands
-      next(null, [{
+      next(null, {
         src: css,
         dest: 'css/styles.css'
-      }]);
+      });
     },
     namespaceCss,
     overrideCss,
@@ -88,10 +88,8 @@ function stripScripts(body, next) {
   $ = cheerio.load(body);
 
   // Use the conf.yml settings to strip the scripts from the page
-  var scripts = conf.scripts.map(function(script) {
-    script.src = $(script.src).map(getScripts).get();
-    return script;
-  });
+  var scripts = conf.scripts;
+  conf.scripts.src = $(conf.scripts.src).map(getScripts).get();
 
   next(null, scripts);
 }
@@ -99,104 +97,94 @@ function stripScripts(body, next) {
 /*
  * Download all scripts marked external and return each script's content
  */
-function downloadScripts(regions, next) {
-  async.map(regions, function(region, next) {
-    async.map(region.src, function(script, next) {
-      if(script.type === 'external') {
-        // Add protocol to protocol-relative URLs
-        if(script.url.substring(0, 2) === '//') {
-          script.url = 'http:' + script.url;
-        }
-        // Download external scripts
-        request(script.url, function(err, resp, body) {
-          if(err) return next(err);
-          next(null, body);
-        });
+function downloadScripts(scripts, next) {
+  async.map(scripts.src, function(script, next) {
+    if(script.type === 'external') {
+      // Add protocol to protocol-relative URLs
+      if(script.url.substring(0, 2) === '//') {
+        script.url = 'http:' + script.url;
       }
-      else {
-        next(null, script.content);
-      }
-    }, function(err, src) {
-      region.src = src;
-      next(err, region);
-    });
-  }, next);
+      // Download external scripts
+      request(script.url, function(err, resp, body) {
+        if(err) return next(err);
+        next(null, body);
+      });
+    }
+    else {
+      next(null, script.content);
+    }
+  }, function(err, src) {
+    scripts.src = src;
+    next(err, scripts);
+  });
 }
 
 /*
  * Concatenate the scripts array into a single text string
  */
-function concatenateFiles(regions, next) {
-  async.map(regions, function(region, next) {
-    region.src = region.src.join(';\n');
-    next(null, region);
-  }, next);
+function concatenateFiles(scripts, next) {
+  scripts.src = scripts.src.join(';\n');
+  next(null, scripts);
 }
 
 /*
  * Apply JS overrides (basically just append them to the end)
  */
-function overrideJs(regions, next) {
-  async.map(regions, function(region, next) {
-    var override = 'overrides/' + region.dest;
+function overrideJs(scripts, next) {
+  var override = 'overrides/' + scripts.dest;
 
-    if(fs.existsSync(override)) {
-      region.src += fs.readFileSync(override, {encoding: 'utf8'});
-    }
+  if(fs.existsSync(override)) {
+    scripts.src += fs.readFileSync(override, {encoding: 'utf8'});
+  }
 
-    // Append the HTML
-    region.src += fs.readFileSync('bundled/js/markup.js', {encoding: 'utf8'});
+  // Append the HTML
+  scripts.src += fs.readFileSync('bundled/js/markup.js', {encoding: 'utf8'});
 
-    next(null, region);
-  }, next);
+  next(null, scripts);
 }
 
 /*
  * Apply CSS overrides (basically just render LESS and append)
  */
-function overrideCss(regions, next) {
-  async.map(regions, function(region, next) {
-    var override = 'overrides/' + region.dest.replace('.css', '.less');
+function overrideCss(styles, next) {
+  var override = 'overrides/' + styles.dest.replace('.css', '.less');
 
-    if(fs.existsSync(override)) {
-      var override_less = '\n\n/********** Begin custom overrides **********/\n';
-      override_less += ('@namespace: ~"' + conf.namespace + '";\n');
-      override_less += fs.readFileSync(override, {encoding: 'utf8'});
+  if(fs.existsSync(override)) {
+    var override_less = '\n\n/********** Begin custom overrides **********/\n';
+    override_less += ('@namespace: ~"' + conf.namespace + '";\n');
+    override_less += fs.readFileSync(override, {encoding: 'utf8'});
 
-      less.render(override_less, function(err, output) {
-        if(err) return next(err);
-        region.src += output.css;
-        next(null, region);
-      });
-    }
-    else {
-      next(null, region);
-    }
-  }, next);
+    less.render(override_less, function(err, output) {
+      if(err) return next(err);
+      styles.src += output.css;
+      next(null, styles);
+    });
+  }
+  else {
+    next(null, styles);
+  }
 }
 
 /*
  * Save a file
  */
-function saveFiles(regions, next) {
-  async.each(regions, function(region, next) {
-    fs.writeFileSync('bundled/' + region.dest, region.src, {encoding: 'utf8'});
+function saveFiles(item, next) {
+  fs.writeFileSync('bundled/' + item.dest, item.src, {encoding: 'utf8'});
 
-    var s3uploader = s3client.uploadFile({
-      localFile: 'bundled/' + region.dest,
-      s3Params: {
-        Key: region.dest,
-        Bucket: conf.s3.bucket,
-        ACL: 'public-read'
-      },
-    });
-    s3uploader.on('error', function(err) {
-      next(err);
-    });
-    s3uploader.on('end', function() {
-      next(null);
-    });
-  }, next);
+  var s3uploader = s3client.uploadFile({
+    localFile: 'bundled/' + item.dest,
+    s3Params: {
+      Key: item.dest,
+      Bucket: conf.s3.bucket,
+      ACL: 'public-read'
+    },
+  });
+  s3uploader.on('error', function(err) {
+    next(err);
+  });
+  s3uploader.on('end', function() {
+    next(null);
+  });
 }
 
 /*
@@ -245,46 +233,39 @@ function htmlToJs(html, next) {
 /*
  * Namespace the CSS using LESS
  */
-function namespaceCss(regions, next) {
-  async.map(regions, function(css, next) {
-    var wrapped = '#' + conf.namespace + '{\n';
-      wrapped += css.src;
-      wrapped += '\n}';
+function namespaceCss(styles, next) {
+  var wrapped = '#' + conf.namespace + '{\n';
+    wrapped += styles.src;
+    wrapped += '\n}';
 
-    less.render(wrapped, function(err, output) {
-      if(err) return next(err);
-      css.src = output.css;
-      next(null, css);
-    });
-  }, next);
+  less.render(wrapped, function(err, output) {
+    if(err) return next(err);
+    styles.src = output.css;
+    next(null, styles);
+  });
 }
 
 /*
  * Write a file to manifest.json that identifies all the
  * JavaScript files that are included in the output
  */
-function writeManifest(regions, next) {
-  var toAppend = regions.map(function(region) {
-    var files = region.src.map(function(script) {
-      var file = {
-        type: script.type
-      };
-      if(script.type === 'inline') {
-        file.excerpt = script.content.substring(0,49);
-      }
-      else {
-        file.url = script.url;
-      }
-      return file;
-    });
-    return {
-      dest: region.dest,
-      files: files
+function writeManifest(scripts, next) {
+  var files = scripts.src.map(function(script) {
+    var file = {
+      type: script.type
     };
+    if(script.type === 'inline') {
+      file.excerpt = script.content.substring(0,49);
+    }
+    else {
+      file.url = script.url;
+    }
+    return file;
   });
-  fs.writeFileSync('bundled/js/manifest.json', JSON.stringify(toAppend), {encoding: 'utf8'});
 
-  next(null, regions);
+  fs.writeFileSync('bundled/js/manifest.json', JSON.stringify(files), {encoding: 'utf8'});
+
+  next(null, scripts);
 }
 
 

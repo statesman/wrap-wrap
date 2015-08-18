@@ -307,7 +307,7 @@ flipper.is_active = function(key) {
 
     
 
-    cmg.mediaurl = 'http://media.cmgdigital.com/shared/media/2015-08-17-10-04-44/web/common/';
+    cmg.mediaurl = 'http://media.cmgdigital.com/shared/media/2015-08-18-11-55-07/web/common/';
     cmg.site_meta = {
         domain: 'www.mystatesman.com',
         media_type: 'premium',
