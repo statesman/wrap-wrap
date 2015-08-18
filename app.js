@@ -22,22 +22,7 @@ request(conf.wrap, function(err, resp, body) {
 
   // Process JavaScript
   async.waterfall([
-    function(next) {
-      next(null, body);
-    },
-    stripScripts,
-    writeManifest,
-    downloadScripts,
-    concatenateFiles,
-    overrideJs,
-    saveFiles
-  ], function(err) {
-    if(err) return console.error(err);
-    console.log('Scripts saved.');
-  });
-
-  // Get HTML to inject
-  async.waterfall([
+    // Get the HTML and save it
     function(next) {
       next(null, body);
     },
@@ -51,10 +36,20 @@ request(conf.wrap, function(err, resp, body) {
         dest: 'js/markup.js'
       }]);
     },
+    saveFiles,
+    function(next) {
+      next(null, body);
+    },
+    // Create the JavaScript bundle, including HTML
+    stripScripts,
+    writeManifest,
+    downloadScripts,
+    concatenateFiles,
+    overrideJs,
     saveFiles
   ], function(err) {
     if(err) return console.error(err);
-    console.log('Injectable HTML saved.');
+    console.log('Scripts saved.');
   });
 
   // Grab inline CSS
@@ -149,6 +144,9 @@ function overrideJs(regions, next) {
       region.src += fs.readFileSync(override, {encoding: 'utf8'});
     }
 
+    // Append the HTML
+    region.src += fs.readFileSync('bundled/js/markup.js', {encoding: 'utf8'});
+
     next(null, region);
   }, next);
 }
@@ -230,10 +228,18 @@ function wrapHtml(html, next) {
  * Turn HTML strings into injectable JavaScript
  */
 function htmlToJs(html, next) {
-  next(null, 'document.write(\'' + minify(html.join('\n'), {
+  var minified = minify(html.join('\n'), {
     collapseWhitespace: true,
     conservativeCollapse: true
-  }) + '\');');
+  });
+
+  var wrapped = 'cmg.query.holdReady(true);' +
+    'cmg.query("body").append(\'' +
+    minified +
+    '\');' +
+    'cmg.query.holdReady(false);';
+
+  next(null,  wrapped);
 }
 
 /*

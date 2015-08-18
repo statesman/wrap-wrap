@@ -1,8 +1,4 @@
 if( typeof window.plate !== 'undefined' ) {
-  // Store the premium value for later so we can use it to override the
-  // value set later in the body
-  plate._premium = plate.premium;
-
   // Override the togglePremium handler to better align with our
   // markup, styles
   plate.togglePremium = function( authorized ){
@@ -50,4 +46,10 @@ if( typeof window.plate !== 'undefined' ) {
       });
     }
   };
+}
+
+// Ensure that the premium setting from Wordpress overrides the
+// one in the minimalist wrap
+if(typeof plate !== 'undefined' && typeof plate._premium !== 'undefined') {
+  plate.premium = wrap.premium;
 }

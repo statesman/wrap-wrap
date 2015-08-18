@@ -1,12 +1,10 @@
-wrap: http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html
+wrap: https://s3-us-west-2.amazonaws.com/wrap.hookem.com/minimalistwrap-081815.html
 
 namespace: 'cmg-wrap-aas'
 
 scripts:
-  - src: 'head script'
-    dest: 'js/head.js'
-  - src: 'body script'
-    dest: 'js/body.js'
+  - src: 'script'
+    dest: 'js/scripts.js'
 
 markup:
   # Janraid markup
