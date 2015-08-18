@@ -50,6 +50,6 @@ if( typeof window.plate !== 'undefined' ) {
 
 // Ensure that the premium setting from Wordpress overrides the
 // one in the minimalist wrap
-if(typeof plate !== 'undefined' && typeof plate._premium !== 'undefined') {
+if(typeof plate !== 'undefined') {
   plate.premium = wrap.premium;
 }

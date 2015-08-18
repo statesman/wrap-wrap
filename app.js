@@ -6,7 +6,8 @@ var cheerio = require('cheerio'),
     yaml = require('js-yaml'),
     minify = require('html-minifier').minify,
     s3 = require('s3'),
-    less = require('less');
+    less = require('less'),
+    mime = require('mime-types');
 
 var conf = yaml.safeLoad(fs.readFileSync('conf.yml', {encoding: 'utf8'}));
 
@@ -201,7 +202,8 @@ function saveFiles(item, next) {
     s3Params: {
       Key: item.dest,
       Bucket: conf.s3.bucket,
-      ACL: 'public-read'
+      ACL: 'public-read',
+      ContentType: mime.lookup(item.dest)
     },
   });
   s3uploader.on('error', function(err) {
