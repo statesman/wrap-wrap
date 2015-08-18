@@ -42,6 +42,7 @@ request(conf.wrap, function(err, resp, body) {
     },
     // Create the JavaScript bundle, including HTML
     stripScripts,
+    filterScripts,
     writeManifest,
     downloadScripts,
     concatenateFiles,
@@ -90,6 +91,30 @@ function stripScripts(body, next) {
   // Use the conf.yml settings to strip the scripts from the page
   var scripts = conf.scripts;
   conf.scripts.src = $(conf.scripts.src).map(getScripts).get();
+
+  next(null, scripts);
+}
+
+/*
+ * Filter out scripts listed in the conf's blacklist
+ */
+function filterScripts(scripts, next) {
+  scripts.src = scripts.src.filter(function(script) {
+    var include = true;
+
+    conf.scripts.blacklist.forEach(function(item) {
+      if(script.type === 'external' && script.url.indexOf(item) !== -1) {
+        console.log('Excluding script', script.url);
+        include = false;
+      }
+      else if(script.type === 'inline' && script.content.indexOf(item) !== -1) {
+        console.log('Excluding inline script containing"' + item + '"');
+        include = false;
+      }
+    });
+
+    return include;
+  });
 
   next(null, scripts);
 }
