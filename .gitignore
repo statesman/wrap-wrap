@@ -79,7 +79,8 @@ Temporary Items
 .apdisk
 
 
-### Project configuration ###
+### Project configuration, data ###
 
 conf.yml
 .ftppass
+bundled/

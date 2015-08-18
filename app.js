@@ -206,12 +206,13 @@ function saveFiles(item, next) {
   fs.writeFileSync('bundled/' + item.dest, item.src, {encoding: 'utf8'});
 
   var s3uploader = s3client.uploadFile({
-    localFile: 'bundled/' + item.dest,
+    localFile: 'bundled/' + item.dest + '.gz',
     s3Params: {
       Key: item.dest,
       Bucket: conf.s3.bucket,
       ACL: 'public-read',
-      ContentType: mime.lookup(item.dest)
+      ContentType: mime.lookup(item.dest),
+      CacheControl: 'max-age=3600'
     },
   });
   s3uploader.on('error', function(err) {
