@@ -1,4 +1,5 @@
-var fs = require('fs');
+var fs = require('fs'),
+    zlib = require('zlib');
 
 var cheerio = require('cheerio'),
     request = require('request'),
@@ -205,21 +206,29 @@ function overrideCss(styles, next) {
 function saveFiles(item, next) {
   fs.writeFileSync('bundled/' + item.dest, item.src, {encoding: 'utf8'});
 
-  var s3uploader = s3client.uploadFile({
-    localFile: 'bundled/' + item.dest,
-    s3Params: {
-      Key: item.dest,
-      Bucket: conf.s3.bucket,
-      ACL: 'public-read',
-      ContentType: mime.lookup(item.dest),
-      CacheControl: 'max-age=3600'
-    },
-  });
-  s3uploader.on('error', function(err) {
-    next(err);
-  });
-  s3uploader.on('end', function() {
-    next(null);
+  var file_contents = fs.readFileSync('bundled/' + item.dest, { encoding: null });
+  zlib.gzip(file_contents, function(err, compressed) {
+    if (err) return next(err);
+
+    fs.writeFileSync('bundled/' + item.dest + '.gz', compressed, {encoding: null});
+
+    var s3uploader = s3client.uploadFile({
+      localFile: 'bundled/' + item.dest + '.gz',
+      s3Params: {
+        Key: item.dest,
+        Bucket: conf.s3.bucket,
+        ACL: 'public-read',
+        ContentEncoding: 'gzip',
+        ContentType: mime.lookup(item.dest),
+        CacheControl: 'max-age=3600'
+      },
+    });
+    s3uploader.on('error', function(err) {
+      next(err);
+    });
+    s3uploader.on('end', function() {
+      next(null);
+    });
   });
 }
 
