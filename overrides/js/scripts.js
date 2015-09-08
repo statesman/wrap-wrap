@@ -4,6 +4,7 @@ if( typeof window.plate !== 'undefined' ) {
   plate.togglePremium = function( authorized ){
     if( authorized || !plate.premium ) {
       cmg.query('.invitation_chunk, .janusNotAuthorized').hide();
+      cmg.query('body').removeClass('hide-premium-content');
     } else{
       cmg.query('.invitation_chunk, .janusNotAuthorized').show();
       cmg.query('body').addClass('hide-premium-content');
