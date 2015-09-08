@@ -2,20 +2,11 @@ if( typeof window.plate !== 'undefined' ) {
   // Override the togglePremium handler to better align with our
   // markup, styles
   plate.togglePremium = function( authorized ){
-    if( authorized ) {
-      cmg.query('body').addClass('cmg-authed');
-    }
-    else {
-      cmg.query('body').removeClass('cmg-authed');
-    }
     if( authorized || !plate.premium ) {
-      cmg.query('body').removeClass('roadblocked');
       cmg.query('.invitation_chunk, .janusNotAuthorized').hide();
-      //cmg.query('#flatpage_frame').remove();
     } else{
-      cmg.query('body').addClass('roadblocked');
       cmg.query('.invitation_chunk, .janusNotAuthorized').show();
-      //cmg.query('#flatpage_frame, .janusNotAuthorized').fadeIn();
+      cmg.query('body').addClass('hide-premium-content');
     }
   };
 
