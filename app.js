@@ -13,6 +13,11 @@ var cheerio = require('cheerio'),
 
 var conf = yaml.safeLoad(fs.readFileSync('conf.yml', {encoding: 'utf8'}));
 
+var isAccessMeter = function(i, el) {
+  var code = $(el).text();
+  return code.indexOf('(function (cmg, $, janrain, plate) {') !== -1;
+};
+
 var s3client = s3.createClient({
   s3Options: {
     accessKeyId: conf.s3.id,
@@ -23,7 +28,26 @@ var s3client = s3.createClient({
 
 request(conf.wrap, function(err, resp, body) {
 
-  // Process JavaScript
+  // Process <head> JavaScript
+  async.waterfall([
+    // Create the JavaScript bundle, including HTML
+    function(next) {
+      $ = cheerio.load(body);
+      next(null, {
+        src: $('script').filter(isAccessMeter).map(getScripts).get(),
+        dest: 'js/access-meter.js'
+      });
+    },
+    downloadScripts,
+    concatenateFiles,
+    overrideJs,
+    saveFiles
+  ], function(err) {
+    if(err) return console.error(err);
+    console.log('Scripts saved.');
+  });
+
+  // Process <body> JavaScript
   async.waterfall([
     // Get the HTML and save it
     function(next) {
@@ -41,12 +65,17 @@ request(conf.wrap, function(err, resp, body) {
     },
     saveFiles,
     function(next) {
-      next(null, body);
+      next(null);
     },
     // Create the JavaScript bundle, including HTML
-    stripScripts,
+    function(next) {
+      $ = cheerio.load(body);
+      next(null, {
+        src: $('script').not(isAccessMeter).map(getScripts).get(),
+        dest: 'js/wrap.js'
+      });
+    },
     filterScripts,
-    writeManifest,
     downloadScripts,
     concatenateFiles,
     overrideJs,
@@ -84,19 +113,6 @@ request(conf.wrap, function(err, resp, body) {
 
 
 // ~ TASKS ~ //
-
-/*
- * Strip the script tags from the wrap
- */
-function stripScripts(body, next) {
-  $ = cheerio.load(body);
-
-  // Use the conf.yml settings to strip the scripts from the page
-  var scripts = conf.scripts;
-  conf.scripts.src = $(conf.scripts.src).map(getScripts).get();
-
-  next(null, scripts);
-}
 
 /*
  * Filter out scripts listed in the conf's blacklist
@@ -166,12 +182,16 @@ function overrideJs(scripts, next) {
   }
 
   // Append the HTML
-  scripts.src += fs.readFileSync('bundled/js/markup.js', {encoding: 'utf8'});
+  if(scripts.dest === 'js/access-meter.js') {
+    scripts.src += fs.readFileSync('bundled/js/markup.js', {encoding: 'utf8'});
+  }
 
+  /*
   scripts.src = UglifyJS.minify(scripts.src, {
     fromString: true,
     mangle: false
   }).code;
+  */
 
   next(null, scripts);
 }
@@ -220,7 +240,7 @@ function saveFiles(item, next) {
         ACL: 'public-read',
         ContentEncoding: 'gzip',
         ContentType: mime.lookup(item.dest),
-        CacheControl: 'max-age=3600'
+//        CacheControl: 'max-age=3600'
       },
     });
     s3uploader.on('error', function(err) {
@@ -272,6 +292,8 @@ function htmlToJs(html, next) {
     '\');' +
     'cmg.query.holdReady(false);';
 
+  //var wrapped = 'cmg.query("body").append(\'' + minified + '\');';
+
   next(null,  wrapped);
 }
 
@@ -288,29 +310,6 @@ function namespaceCss(styles, next) {
     styles.src = output.css;
     next(null, styles);
   });
-}
-
-/*
- * Write a file to manifest.json that identifies all the
- * JavaScript files that are included in the output
- */
-function writeManifest(scripts, next) {
-  var files = scripts.src.map(function(script) {
-    var file = {
-      type: script.type
-    };
-    if(script.type === 'inline') {
-      file.excerpt = script.content.substring(0,49);
-    }
-    else {
-      file.url = script.url;
-    }
-    return file;
-  });
-
-  fs.writeFileSync('bundled/js/manifest.json', JSON.stringify(files), {encoding: 'utf8'});
-
-  next(null, scripts);
 }
 
 
