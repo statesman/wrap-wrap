@@ -28,7 +28,7 @@ var s3client = s3.createClient({
 
 request(conf.wrap, function(err, resp, body) {
 
-  // Process <head> JavaScript
+  // Process access meter JavaScript
   async.waterfall([
     // Create the JavaScript bundle, including HTML
     function(next) {
@@ -186,12 +186,10 @@ function overrideJs(scripts, next) {
     scripts.src += fs.readFileSync('bundled/js/markup.js', {encoding: 'utf8'});
   }
 
-  /*
   scripts.src = UglifyJS.minify(scripts.src, {
     fromString: true,
     mangle: false
   }).code;
-  */
 
   next(null, scripts);
 }
@@ -240,7 +238,7 @@ function saveFiles(item, next) {
         ACL: 'public-read',
         ContentEncoding: 'gzip',
         ContentType: mime.lookup(item.dest),
-//        CacheControl: 'max-age=3600'
+        CacheControl: 'max-age=60'
       },
     });
     s3uploader.on('error', function(err) {
