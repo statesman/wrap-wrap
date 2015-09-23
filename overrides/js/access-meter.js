@@ -2,7 +2,5 @@ if(typeof window.plate !== 'undefined' && typeof wrap !== 'undefined' && wrap.ha
   /**
    * Use our own wrap object to set the premium status on pages
    */
-  if(wrap.premium === false) {
-    window.plate.premium = wrap.premium;
-  }
+  window.plate.premium = wrap.premium;
 }

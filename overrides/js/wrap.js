@@ -29,4 +29,9 @@ if(typeof window.plate !== 'undefined') {
         setTimeout(plate.logoutSuccessHandler, 100);
       }
   };
+
+  /**
+   * Use our own wrap object to set the premium status on pages
+   */
+  window.plate.premium = wrap.premium;
 }
