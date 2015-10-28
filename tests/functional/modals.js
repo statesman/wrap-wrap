@@ -4,13 +4,16 @@ define(function(require) {
       assert = require('intern/chai!assert'),
       fs = require('intern/dojo/node!fs');
 
+  var firstPage = 'tests/support/premiumtest/1.html',
+      secondPage = 'tests/support/premiumtest/2.html';
+
   registerSuite({
 
-    name: 'access meter',
+    name: 'access meter - page 1',
 
-    'first modal shows': function() {
+    'modal shows': function() {
       return this.remote
-        .get(require.toUrl('tests/support/premiumtest/1.html'))
+        .get(require.toUrl(firstPage))
         .setFindTimeout(5000)
         .findById('pq-passage-quota-welcome')
           .isDisplayed()
@@ -24,15 +27,14 @@ define(function(require) {
         .end();
     },
 
-    'first modal goes away': function() {
+    'modal goes away': function() {
       return this.remote
-        .get(require.toUrl('tests/support/premiumtest/1.html'))
+        .get(require.toUrl(firstPage))
         .setFindTimeout(5000)
         .findById('pq-welcome-continue')
           .click()
           .end()
         .findById('pq-passage-quota-welcome')
-          .setFindTimeout(5000)
           .isDisplayed()
         .then(function(visible) {
           assert.isFalse(visible,
@@ -41,6 +43,30 @@ define(function(require) {
         .takeScreenshot()
         .then(function (data) {
           fs.writeFileSync('tests/screenshots/test-2.png', data, 'base64');
+        })
+        .end();
+    }
+
+  });
+
+  registerSuite({
+
+    name: 'access meter - page 2',
+
+    'no modal shows': function() {
+      return this.remote
+        .get(require.toUrl(firstPage))
+        .get(require.toUrl(secondPage))
+        .setFindTimeout(5000)
+        .findById('pq-passage-quota-welcome')
+          .isDisplayed()
+        .then(function(visible) {
+          assert.isFalse(visible,
+            'The welcome modal shouldn\'t show on load for a second page');
+        })
+        .takeScreenshot()
+        .then(function (data) {
+          fs.writeFileSync('tests/screenshots/test-3.png', data, 'base64');
         })
         .end();
     }
