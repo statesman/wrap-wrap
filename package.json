@@ -14,5 +14,8 @@
   "bugs": {
     "url": "https://github.com/statesman/wrap-wrap/issues"
   },
-  "homepage": "https://github.com/statesman/wrap-wrap"
+  "homepage": "https://github.com/statesman/wrap-wrap",
+  "dependencies": {
+    "intern": "^3.0.6"
+  }
 }
