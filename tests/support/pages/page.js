@@ -29,6 +29,7 @@ define([
    */
   Page.prototype.setPremium = function(premium) {
     this._premium = (premium === true);
+    return this;
   };
 
   /**
