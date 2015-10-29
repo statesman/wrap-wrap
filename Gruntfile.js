@@ -1,6 +1,16 @@
 module.exports = function(grunt) {
   grunt.initConfig({
 
+    // Download all the <script> tags
+    scrapejs: {
+      options: {
+        url: 'http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html'
+      },
+      target: {
+        dest: 'build/scraped-scripts.js'
+      }
+    },
+
     // Run our tests using intern.js
     intern: {
       'wrap-wrap': {
@@ -24,8 +34,12 @@ module.exports = function(grunt) {
 
   });
 
+  // Load packaged tasks
   grunt.loadNpmTasks('intern');
   grunt.loadNpmTasks('grunt-express');
+
+  // Load our custom wrap-wrap tasks
+  grunt.loadTasks('tasks');
 
   // Display the test page at http://localhost:3000/
   grunt.registerTask('testpage', ['express', 'express-keepalive']);

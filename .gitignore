@@ -79,7 +79,5 @@ Temporary Items
 .apdisk
 
 
-### Project configuration ###
-
-conf.yml
-.ftppass
+### App data ###
+build/
