@@ -27,7 +27,11 @@ define({
 	suites: [ /* 'tests/unit/unit-test' */ ],
 
 	// Functional test suite(s) to execute against each browser once non-functional tests are completed
-	functionalSuites: [ 'tests/functional/modals' ],
+	functionalSuites: [
+		'tests/functional/welcome-modal',
+		'tests/functional/upsell-modal',
+		'tests/functional/roadblock-modal'
+	],
 
 	// A regular expression matching URLs to files that should not be included in code coverage analysis
 	excludeInstrumentation: /^(?:tests|node_modules)\//
