@@ -24,6 +24,7 @@ define([
       'shows on 1st page': function() {
         return page
           .getPage()
+          .sleep(1000) // give the modal a chance to load
           .setFindTimeout(5000)
           .findById('pq-passage-quota-welcome')
             .isDisplayed()

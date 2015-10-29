@@ -1,4 +1,7 @@
-define(function(require) {
+define([
+  'require',
+  'intern/dojo/Promise'
+], function(require, Promise) {
 
   /**
    * A page object that allows us to simulate a user
@@ -51,7 +54,7 @@ define(function(require) {
     var targetPage = this._pageviews + n;
 
     while(this._pageviews < targetPage) {
-      this.remote.get(this._getPath(this._pageviews));
+      this.remote.get(this._getPath(this._pageviews)).sleep(10000);
       this._pageviews++;
     }
 
@@ -59,12 +62,55 @@ define(function(require) {
   };
 
   /**
-   * Reset the pageview counter; should be run in beforeEach
+   * Reset the pageview counter and all browser session data; should
+   *   be run in beforeEach
    */
   Page.prototype.reset = function() {
     this._premium = true;
     this._pageviews = 1;
+
+    return this.remote
+      .clearCookies()
+      .clearLocalStorage()
+      .clearSessionStorage();
   };
+
+  /**
+   * Check that there aren't any modals visible
+   *
+   * @param {Command} currentPage - a Command instance for a page;
+   *   should be what's returned from our .getPage() method
+   * @return {Promise} - a promise that resolves to a boolean
+   *   indicating whether all of the modals are hidden
+   */
+  Page.prototype.noModals = function(currentPage) {
+    var welcomeVisible = currentPage
+      .setFindTimeout(5000)
+      .findById('pq-passage-quota-welcome')
+      .isDisplayed()
+      .promise;
+
+    var upsellVisible = currentPage
+      .setFindTimeout(5000)
+      .findById('pq-passage-quota-sticky')
+      .isDisplayed()
+      .promise;
+
+    var roadblockVisible = currentPage
+      .setFindTimeout(5000)
+      .findById('pq-passage-quota-block')
+      .isDisplayed()
+      .promise;
+
+    return Promise.all([
+      welcomeVisible,
+      upsellVisible,
+      roadblockVisible
+    ]).then(function(results){
+      return results[0] === results[1] === results[2] === false;
+    });
+  };
+
 
   /**
    * Return a path to the appropriate test file
