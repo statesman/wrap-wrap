@@ -6,8 +6,21 @@ module.exports = function(grunt) {
       options: {
         url: 'http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html'
       },
-      target: {
-        dest: 'build/scraped-scripts.js'
+      'access-meter': {
+        options: {
+          filterContent: function(script) {
+            return script.indexOf('(function (cmg, $, janrain, plate) {') !== -1;
+          }
+        },
+        dest: 'build/access-meter.js'
+      },
+      wrap: {
+        options: {
+          filterContent: function(script) {
+            return script.indexOf('(function (cmg, $, janrain, plate) {') === -1;
+          }
+        },
+        dest: 'build/wrap.js'
       }
     },
 

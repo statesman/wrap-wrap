@@ -26,7 +26,6 @@ module.exports = function(grunt) {
         src = 'http:' + src;
       }
 
-      grunt.log.writeln('Downloading ' + src);
       var r = request('GET', src);
 
       return r.getBody('utf8');
@@ -44,7 +43,7 @@ module.exports = function(grunt) {
     // Set defaults
     var options = this.options({
       url: false,
-      filter: function(script) {
+      filterContent: function(script) {
         return true;
       }
     });
@@ -61,15 +60,17 @@ module.exports = function(grunt) {
     var $ = cheerio.load(toScrape.getBody('utf8'));
 
     // Strip out the scripts, filtering using our callback
-    var scripts = $('script')
-      .filter(options.filter);
+    var scripts = $('script');
 
     // Count 'em
     var numScripts = scripts.length;
 
     // Download all of the external scripts
-    scripts = scripts.map(getScripts)
-      .get();
+    scripts = scripts.map(getScripts).get();
+
+    // Filter out scripts based on content filter
+    scripts = scripts.filter(options.filterContent);
+    var filteredOut = numScripts - scripts.length;
 
     // Concatenate all the scripts we scraped
     scripts = scripts.join(';\n');
@@ -77,8 +78,8 @@ module.exports = function(grunt) {
     // Save them to the specified destination
     this.files.forEach(function(file) {
       grunt.file.write(file.dest, scripts);
-      grunt.log.oklns('Saved ' + numScripts + ' <script>s to "' +
-        file.dest + '".');
+      grunt.log.oklns('Scraped ' + numScripts + ' <script>s, filtered out ' +
+        filteredOut + ', saved to "' + file.dest + '".');
     });
 
   });
