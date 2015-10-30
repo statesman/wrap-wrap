@@ -28,6 +28,8 @@ module.exports = function(grunt) {
 
       var r = request('GET', src);
 
+      grunt.log.write('.');
+
       return r.getBody('utf8');
     }
     else {
@@ -52,6 +54,9 @@ module.exports = function(grunt) {
     if(!options.url || grunt.util.kindOf(options.url) !== 'string') {
       grunt.fail.fatal('A URL for the page to scrape is required. Set it as options.url.');
     }
+    else if(grunt.util.kindOf(options.filterContent) !== 'function') {
+      grunt.fail.fatal('options.filterContent must be a function.');
+    }
 
     // Get the page to scrape
     var toScrape = request('GET', options.url);
@@ -66,7 +71,9 @@ module.exports = function(grunt) {
     var numScripts = scripts.length;
 
     // Download all of the external scripts
+    grunt.log.write('Downloading scripts ');
     scripts = scripts.map(getScripts).get();
+    grunt.log.writeln('');
 
     // Filter out scripts based on content filter
     scripts = scripts.filter(options.filterContent);

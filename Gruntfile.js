@@ -4,6 +4,22 @@ module.exports = function(grunt) {
     // Download all the <script> tags
     scrapejs: {
       options: {
+        srcBlacklist: [
+          'common/premium/js/bootstrap-transition.js',
+          'common/premium/js/bootstrap-modalmanager.js',
+          'common/premium/js/bootstrap-modal-ext.js',
+          'common/premium/js/bootstrap-dropdown.js',
+          'common/premium/js/bootstrap-collapse.js',
+          'www.googletagservices.com/tag/js/gpt.js',
+          'common/premium/js/cmg-header.js',
+          'common/premium/js/jquery.placeholder.min.js',
+          'common/lib/lazythumbs/js/lazythumbs.js',
+          'common/javascript/writeCapture.js',
+          'common/javascript/jquery.writeCapture.js'
+        ],
+        contentBlacklist: [
+          'var googletag = googletag || {},'
+        ],
         url: 'http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html'
       },
       'access-meter': {
