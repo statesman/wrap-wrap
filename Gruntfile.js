@@ -83,6 +83,22 @@ module.exports = function(grunt) {
       }
     },
 
+    concat: {
+      options: {
+        stripBanners: true,
+      },
+      'access-meter': {
+        src: ['build/access-meter.js', 'overrides/hookem-access-meter.js'],
+        dest: 'dist/access-meter.js',
+        nonull: true
+      },
+      wrap: {
+        src: ['build/wrap.js', 'build/markup.js', 'overrides/hookem-wrap.js'],
+        dest: 'dist/wrap.js',
+        nonull: true
+      }
+    },
+
     // Run our tests using intern.js
     intern: {
       'wrap-wrap': {
@@ -109,11 +125,12 @@ module.exports = function(grunt) {
   // Load packaged tasks
   grunt.loadNpmTasks('intern');
   grunt.loadNpmTasks('grunt-express');
+  grunt.loadNpmTasks('grunt-contrib-concat');
 
   // Load our custom wrap-wrap tasks
   grunt.loadTasks('tasks');
 
-  grunt.registerTask('scrape', ['scrapejs', 'scrapehtml']);
+  grunt.registerTask('scrape', ['scrapejs', 'scrapehtml', 'concat']);
 
   // Display the test page at http://localhost:3000/
   grunt.registerTask('testpage', ['express', 'express-keepalive']);
