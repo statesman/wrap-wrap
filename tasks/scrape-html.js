@@ -30,6 +30,12 @@ module.exports = function(grunt) {
     else if(grunt.util.kindOf(options.els) !== 'array') {
       grunt.fail.fatal('options.els must be an array.');
     }
+    else if(grunt.util.kindOf(options.makeJs) !== 'function') {
+      grunt.fail.fatal('options.makeJs must be a function.');
+    }
+    else if(grunt.util.kindOf(options.processHtml) !== 'function') {
+      grunt.fail.fatal('options.processHtml must be a function.');
+    }
 
     // Get the page to scrape
     var toScrape = request('GET', options.url);
@@ -53,18 +59,22 @@ module.exports = function(grunt) {
       return item;
     });
 
+    // Run the array of HTML through the processing function
     var processed = options.processHtml(markup);
 
+    // Count the number of elements (for reporting in the console)
     var numEls = processed.length;
 
+    // Join the array of HTML into a single string and minify it
     var minified = minify(processed.join('\n'), {
       collapseWhitespace: true,
       conservativeCollapse: true
     });
 
+    // Wrap the HTML in a JavaScript call to make it injectable
     var wrapped = options.makeJs(minified);
 
-    // Save them to the specified destination
+    // Save our JavaScript
     this.files.forEach(function(file) {
       grunt.file.write(file.dest, wrapped);
       grunt.log.oklns('Saved ' + numEls + ' scraped HTML elements to "' + file.dest + '" as injectable JavaScript.');
