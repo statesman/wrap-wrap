@@ -59,6 +59,34 @@ module.exports = function(grunt) {
     };
   }
 
+  /**
+   * When passed an array of blacklisted strings, use it to
+   * return a Cheerio-friendly filter function that excludes
+   * any passed element that has one of the strings as its
+   * HTML src attribute.
+   *
+   * @param {array} blackList - an array of strings that will
+   *   be used to build our filter function
+   * @return {function} - a function that can be used as a
+   *   Cheerio filter function
+   */
+  function doSrcBlacklist(blacklist) {
+    return function(i, el) {
+      var $ = cheerio.load(el),
+          src = $(el).attr('src');
+
+      var include = true;
+
+      blacklist.forEach(function(item) {
+        if(typeof(src) !== 'undefined' && src.indexOf(item) !== -1) {
+          include = false;
+        }
+      });
+
+      return include;
+    };
+  }
+
   // Register the task
   var taskDesc = 'Scrape <script> tags from a Web page and save them.';
 
@@ -91,6 +119,9 @@ module.exports = function(grunt) {
 
     // Count 'em
     var numScripts = scripts.length;
+
+    // Filter out scripts based on their source
+    scripts = scripts.filter(doSrcBlacklist(options.srcBlacklist));
 
     // Download all of the external scripts
     grunt.log.write('Downloading scripts ');
