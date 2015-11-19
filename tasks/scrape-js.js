@@ -37,6 +37,28 @@ module.exports = function(grunt) {
     }
   }
 
+  /**
+   * When passed an array of blacklisted strings, use it to
+   * return a filter function that excludes any passed item
+   * that includes one of the blacklisted strings.
+   *
+   * @param {array} blackList - an array of strings that will
+   *   be used to build our filter function
+   * @return {function} - a function that can be used as a
+   *   filter function
+   */
+  function doContentBlacklist(blacklist) {
+    return function(script) {
+      var include = true;
+      blacklist.forEach(function(listitem) {
+        if(script.indexOf(listitem) !== -1) {
+          include = false;
+        }
+      });
+      return include;
+    };
+  }
+
   // Register the task
   var taskDesc = 'Scrape <script> tags from a Web page and save them.';
 
@@ -75,8 +97,10 @@ module.exports = function(grunt) {
     scripts = scripts.map(getScripts).get();
     grunt.log.writeln('');
 
-    // Filter out scripts based on content filter
+    // Filter out scripts based on content filter function and content
+    // blacklist
     scripts = scripts.filter(options.filterContent);
+    scripts = scripts.filter(doContentBlacklist(options.contentBlacklist));
     var filteredOut = numScripts - scripts.length;
 
     // Concatenate all the scripts we scraped
