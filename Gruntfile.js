@@ -40,6 +40,49 @@ module.exports = function(grunt) {
       }
     },
 
+    // Scrape markup from the page and save it as JavaScript
+    scrapehtml: {
+      options: {
+        els: [
+          //Janraid markup
+          '#flatpage_frame',
+          '#returnSocial',
+          '#returnTraditional',
+          '#socialRegistration',
+          '#traditionalRegistration',
+          '#traditionalRegistrationBlank',
+          '#registrationSuccess',
+          '#registrationSuccessConfirmed',
+          '#forgotPassword',
+          '#forgotPasswordSuccess',
+          '#mergeAccounts',
+          '#traditionalAuthenticateMerge',
+          '#resendVerification',
+          '#resendVerificationSuccess',
+          // Not in the CMG docs, but required
+          '#signIn'
+        ],
+        processHtml: function(markup) {
+          markup.unshift('<!-- Begin CMG wrap -->\n<div id="#cmg-wrap-aas">');
+          markup.push('</div>\n<!-- End CMG wrap -->');
+          return markup;
+        },
+        makeJs: function(markup) {
+          return 'cmg.query.holdReady(true);' +
+            'cmg.query("body").append(\'' +
+            markup +
+            '\');' +
+            'cmg.query.holdReady(false);';
+        }
+      },
+      markup: {
+        options: {
+          url: 'http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html'
+        },
+        dest: 'build/markup.js'
+      }
+    },
+
     // Run our tests using intern.js
     intern: {
       'wrap-wrap': {
@@ -69,6 +112,8 @@ module.exports = function(grunt) {
 
   // Load our custom wrap-wrap tasks
   grunt.loadTasks('tasks');
+
+  grunt.registerTask('scrape', ['scrapejs', 'scrapehtml']);
 
   // Display the test page at http://localhost:3000/
   grunt.registerTask('testpage', ['express', 'express-keepalive']);
