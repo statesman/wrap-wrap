@@ -25,16 +25,17 @@ define([
         return page
           .doPageviews(5)
           .getPage()
+          .sleep(2500)
+          .takeScreenshot()
+            .then(function (data) {
+              fs.writeFileSync('tests/screenshots/roadblock-modal.png', data);
+            })
           .setFindTimeout(5000)
           .findById('pq-passage-quota-block')
             .isDisplayed()
           .then(function(visible) {
             assert.isTrue(visible,
               'The roadblock modal should show on the 6th premium pageview');
-          })
-          .takeScreenshot()
-          .then(function (data) {
-            fs.writeFileSync('tests/screenshots/test-5.png', data);
           })
           .end();
       },

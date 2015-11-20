@@ -25,16 +25,17 @@ define([
         return page
           .doPageviews(3)
           .getPage()
+          .sleep(2500)
+          .takeScreenshot()
+            .then(function (data) {
+              fs.writeFileSync('tests/screenshots/sticky-modal.png', data);
+            })
           .setFindTimeout(5000)
           .findById('pq-passage-quota-sticky')
             .isDisplayed()
           .then(function(visible) {
             assert.isTrue(visible,
               'The upsell modal should show on the 4th premium pageview');
-          })
-          .takeScreenshot()
-          .then(function (data) {
-            fs.writeFileSync('tests/screenshots/test-3.png', data);
           })
           .end();
       },

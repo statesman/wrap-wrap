@@ -53,7 +53,22 @@ define([
       '1st free pageview': noModalTest(1, false, '1st'),
       '2nd free pageview': noModalTest(2, false, '2nd'),
       '3rd free pageview': noModalTest(3, false, '3rd'),
-      '4th free pageview': noModalTest(4, false, '4th')
+      '4th free pageview': noModalTest(4, false, '4th'),
+
+      /**
+       * A hacky test that doesn't really assert anything and just
+       * makes an assertion for our status report
+       */
+      '1st free pageview (screenshot)': function() {
+        return page
+          .setPremium(false)
+          .getPage()
+          .takeScreenshot()
+            .then(function(data) {
+              fs.writeFileSync('tests/screenshots/no-modals.png', data);
+              assert.isTrue(true);
+            });
+      }
 
     };
 

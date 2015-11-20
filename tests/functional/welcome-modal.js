@@ -24,17 +24,17 @@ define([
       'shows on 1st page': function() {
         return page
           .getPage()
-          .sleep(1000) // give the modal a chance to load
+          .sleep(2500)
+          .takeScreenshot()
+            .then(function(data) {
+              fs.writeFileSync('tests/screenshots/welcome-modal.png', data);
+            })
           .setFindTimeout(5000)
           .findById('pq-passage-quota-welcome')
             .isDisplayed()
           .then(function(visible) {
             assert.isTrue(visible,
               'The welcome modal should show on the 1st premium pageview');
-          })
-          .takeScreenshot()
-          .then(function(data) {
-            fs.writeFileSync('tests/screenshots/test-1.png', data);
           })
           .end();
       },
@@ -51,10 +51,6 @@ define([
           .then(function(visible) {
             assert.isFalse(visible,
               'The welcome modal should go away when the button is clicked');
-          })
-          .takeScreenshot()
-          .then(function(data) {
-            fs.writeFileSync('tests/screenshots/test-2.png', data);
           })
           .end();
       }
