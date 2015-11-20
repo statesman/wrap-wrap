@@ -28,7 +28,8 @@ module.exports = function(grunt) {
 
       var r = request('GET', src);
 
-      grunt.log.write('.');
+      grunt.log.verbose.writeln('Downloading ' + src);
+      grunt.log.notverbose.write('=');
 
       return r.getBody('utf8');
     }
@@ -124,9 +125,9 @@ module.exports = function(grunt) {
     scripts = scripts.filter(doSrcBlacklist(options.srcBlacklist));
 
     // Download all of the external scripts
-    grunt.log.write('Downloading scripts ');
+    grunt.log.notverbose.write('Downloading scripts [');
     scripts = scripts.map(getScripts).get();
-    grunt.log.writeln('');
+    grunt.log.notverbose.writeln(']');
 
     // Filter out scripts based on content filter function and content
     // blacklist
