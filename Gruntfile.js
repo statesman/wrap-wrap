@@ -153,6 +153,23 @@ module.exports = function(grunt) {
         cwd: 'dist/',
         src: '**'
       }
+    },
+
+    cloudfront: {
+      options: {
+        accessKeyId: "<%= aws.accessKeyId %>",
+        secretAccessKey: "<%= aws.secretAccessKey %>",
+        distributionId: 'E3MN41DCETNLZ0'
+      },
+      wrap: {
+        options: {
+          invalidations: [
+            '/wrap.js',
+            '/access-meter.js',
+            '/wrap.css'
+          ]
+        }
+      }
     }
 
   });
@@ -176,5 +193,5 @@ module.exports = function(grunt) {
   grunt.registerTask('testpage', ['express:testpage', 'express-keepalive']);
 
   // Our master task that scrapes the wrap, then tests it
-  grunt.registerTask('wrap', ['scrape', 'testwrap', 's3']);
+  grunt.registerTask('wrap', ['scrape', 'testwrap', 's3', 'cloudfront']);
 };
