@@ -38,6 +38,17 @@ module.exports = function(grunt) {
       }
     },
 
+    // Scrape inline styles from the page and save it as CSS
+    scrapecss: {
+      options: {
+        url: 'http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html',
+        els: 'style'
+      },
+      wrap: {
+        dest: 'build/wrap.css'
+      }
+    },
+
     // Scrape markup from the page and save it as JavaScript
     scrapehtml: {
       options: {

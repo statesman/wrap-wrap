@@ -43,10 +43,6 @@ module.exports = function(grunt) {
     // Get the body and parse it using cheerio
     var $ = cheerio.load(toScrape.getBody('utf8'));
 
-    // Strip all CSS, including some inline styles
-    // $('style').remove();
-    // $('#flatpage_invitation').removeAttr('style');
-
     // Get the html of each element specified in the options
     var markup = options.els.map(function(selector) {
       var item = $.html($(selector));
