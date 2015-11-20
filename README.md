@@ -5,6 +5,9 @@
 
 ## Usage
 
+#### Installation
+- `npm install`
+
 #### Scraping the wrap
 - `grunt scrape`
 
