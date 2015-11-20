@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
   grunt.initConfig({
 
+    wrapUrl: 'http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html',
+
     // Download all the <script> tags
     scrapejs: {
       options: {
@@ -18,7 +20,7 @@ module.exports = function(grunt) {
         contentBlacklist: [
           'var googletag = googletag || {},'
         ],
-        url: 'http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html'
+        url: "<%= wrapUrl %>"
       },
       'access-meter': {
         options: {
@@ -41,7 +43,7 @@ module.exports = function(grunt) {
     // Scrape inline styles from the page and save it as CSS
     scrapecss: {
       options: {
-        url: 'http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html',
+        url: "<%= wrapUrl %>",
         els: 'style'
       },
       wrap: {
@@ -86,7 +88,7 @@ module.exports = function(grunt) {
       },
       markup: {
         options: {
-          url: 'http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html'
+          url: "<%= wrapUrl %>"
         },
         dest: 'build/markup.js'
       }
@@ -135,6 +137,22 @@ module.exports = function(grunt) {
           port: 3001
         }
       }
+    },
+
+    // Upload our compiled files to Amazon S3
+    aws: grunt.file.readJSON('aws-credentials.json'),
+
+    s3: {
+      options: {
+        accessKeyId: "<%= aws.accessKeyId %>",
+        secretAccessKey: "<%= aws.secretAccessKey %>",
+        bucket: 'wrap.hookem.com',
+        region: 'us-west-2'
+      },
+      wrap: {
+        cwd: 'dist/',
+        src: '**'
+      }
     }
 
   });
@@ -143,6 +161,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('intern');
   grunt.loadNpmTasks('grunt-express');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-aws');
 
   // Load our custom wrap-wrap tasks
   grunt.loadTasks('tasks');
@@ -155,4 +174,7 @@ module.exports = function(grunt) {
 
   // Display the test page at http://localhost:3000/
   grunt.registerTask('testpage', ['express:testpage', 'express-keepalive']);
+
+  // Our master task that scrapes the wrap, then tests it
+  grunt.registerTask('wrap', ['scrape', 'testwrap', 's3']);
 };

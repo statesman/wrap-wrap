@@ -82,3 +82,4 @@ Temporary Items
 ### App data ###
 build/
 tests/screenshots/*.png
+aws-credentials.json
