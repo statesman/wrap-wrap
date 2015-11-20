@@ -47,7 +47,7 @@ module.exports = function(grunt) {
         els: 'style'
       },
       wrap: {
-        dest: 'dist/wrap.css'
+        dest: 'build/wrap.less'
       }
     },
 
@@ -94,6 +94,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // Combine and minify wrap JavaScript
     uglify: {
       options: {
         mangle: false,
@@ -105,6 +106,18 @@ module.exports = function(grunt) {
         files: {
           'dist/access-meter.js': ['build/access-meter.js', 'overrides/hookem-access-meter.js'],
           'dist/wrap.js': ['build/wrap.js', 'build/markup.js', 'overrides/hookem-wrap.js']
+        }
+      }
+    },
+
+    // Combine and minify wrap CSS
+    less: {
+      options: {
+        compress: true
+      },
+      wrap: {
+        files: {
+          'dist/wrap.css': 'overrides/hookem-wrap.less'
         }
       }
     },
@@ -126,13 +139,13 @@ module.exports = function(grunt) {
       options: {
         server: 'tests/support/testserver/app'
       },
-      testpage: {
+      mantestserver: {
         options: {
           port: 3000,
           open: 'http://localhost:3000/free/1/'
         }
       },
-      testserver: {
+      functestserver: {
         options: {
           port: 3001
         }
@@ -178,19 +191,20 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('intern');
   grunt.loadNpmTasks('grunt-express');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-aws');
 
   // Load our custom wrap-wrap tasks
   grunt.loadTasks('tasks');
 
   // Scrape the wrap
-  grunt.registerTask('scrape', ['scrapejs', 'scrapehtml', 'scrapecss', 'uglify']);
+  grunt.registerTask('scrape', ['scrapejs', 'scrapehtml', 'uglify', 'scrapecss', 'less']);
 
   // Run functional tests on scraped wrap code
-  grunt.registerTask('testwrap', ['express:testserver', 'intern']);
+  grunt.registerTask('testwrap', ['express:functestserver', 'intern']);
 
   // Display the test page at http://localhost:3000/
-  grunt.registerTask('testpage', ['express:testpage', 'express-keepalive']);
+  grunt.registerTask('testpage', ['express:mantestserver', 'express-keepalive']);
 
   // Our master task that scrapes the wrap, then tests it
   grunt.registerTask('wrap', ['scrape', 'testwrap', 's3', 'cloudfront']);
