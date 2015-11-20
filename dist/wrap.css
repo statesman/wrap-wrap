@@ -1,0 +1,481 @@
+
+.header .header-logo  {
+    box-sizing: content-box;
+}
+.header a {
+    color: transparent;
+}
+.header .right .header-text:hover {
+    border-color: transparent;
+}
+.section-navigation {
+    position: fixed;
+    top: 42px;
+}
+.section-header {
+    display: none;
+}
+#story-body .premium-content .story .section-title {
+    margin-top: 0px;
+}
+
+@import "http://fonts.googleapis.com/css?family=Oswald:300,400,700";
+
+.pq-modal-content {
+  display: none;
+}
+.pq-modal-content .pq-modal-screen {
+  top: 0;
+  position: fixed;
+  z-index: 1000;
+  background-color: black;
+  opacity: 0.4;
+  width: 100%;
+  height: 100%;
+}
+.pq-modal-content .pq-modal-wrap-container {
+  width: 100%;
+  position: fixed;
+  z-index: 1001;
+}
+.pq-modal-content .pq-modal-wrap-container.pq-modal-roadblock-container {
+  top: 11%;
+}
+.pq-modal-content .pq-modal-wrap-container.pq-modal-welcome-container {
+  top: 23%;
+}
+.pq-fixed-janrain-modal {
+  position: fixed !important;
+  top: 50% !important;
+  transform: translate(0, -50%);
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+}
+.pq-modal-sticky {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  bottom: 0;
+}
+.pq-master-inherit {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 20px;
+  color: #000000;
+  background-color: #ffffff;
+}
+.pq-master-inherit * {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  position: static;
+  text-transform: none;
+}
+.pq-master-inherit *:link {
+  border-bottom-style: none;
+}
+.pq-master-inherit h1 {
+  font-size: 36px;
+  line-height: 40px;
+}
+.pq-master-inherit img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border: 0;
+}
+/* Global Access Meter modal styles */
+.pq-access-meter-modal {
+  margin-left: auto;
+  margin-right: auto;
+  font-family: Arial, sans-serif;
+  box-shadow: -5px 3px 36px 0px rgba(0, 0, 0, 0.75);
+}
+.pq-access-meter-modal * {
+  margin: 0;
+}
+.pq-access-meter-modal a:focus,
+.pq-access-meter-modal a:active,
+.pq-access-meter-modal a:hover {
+  text-decoration: none;
+}
+.pq-access-meter-modal .pq-access-meter-btn {
+  padding: 13px 35px;
+  font: 14px 'Oswald', sans-serif;
+  text-decoration: none;
+  color: #fff;
+  background-color: #006cb8;
+}
+.pq-access-meter-modal .pq-access-meter-btn sup {
+  font-size: 9px;
+}
+.pq-access-meter-modal .pq-access-meter-btn:hover {
+  color: #fff;
+}
+.pq-access-meter-modal .pq-access-meter-link {
+  font-size: 10px;
+  color: #fff;
+  text-decoration: underline;
+}
+.pq-access-meter-modal .pq-access-meter-link:focus,
+.pq-access-meter-modal .pq-access-meter-link:active,
+.pq-access-meter-modal .pq-access-meter-link:hover {
+  color: #fff;
+}
+.pq-access-meter-modal .pq-access-welcome-header {
+  position: relative;
+  height: 50px;
+  background: #fff;
+  box-shadow: inset 0px 4px 30px rgba(40, 40, 40, 0.38);
+}
+.pq-access-meter-modal .pq-access-welcome-header .pq-access-welcome-logo {
+  padding-top: 12px;
+  max-width: 95%;
+  height: 24px;
+}
+.pq-access-meter-modal .pq-access-meter-close {
+  font-size: 22px;
+  line-height: normal;
+  text-decoration: none;
+}
+/* Access Meter welcome */
+.pq-access-meter-modal-welcome {
+  max-width: 786px;
+}
+.pq-access-meter-modal-welcome .pq-access-welcome-header {
+  padding: 0 25px;
+}
+.pq-access-meter-modal-welcome .pq-access-welcome-header .pq-access-meter-close {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  line-height: 50px;
+  color: #000;
+}
+.pq-access-meter-modal-welcome .pq-access-body {
+  position: relative;
+  padding: 25px 25px 40px 25px;
+  background: #252222;
+  color: #fff;
+}
+.pq-access-meter-modal-welcome .pq-access-body > h1 {
+  margin-bottom: 30px;
+  line-height: normal;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+}
+.pq-access-meter-modal-welcome .pq-access-body > p {
+  line-height: normal;
+  font-size: 22px;
+}
+.pq-access-meter-modal-welcome .pq-access-body > p:first-of-type {
+  margin-bottom: 30px;
+}
+.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer {
+  padding-top: 45px;
+  text-align: center;
+}
+.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer .pq-access-meter-btn {
+  display: inline-block;
+  margin-bottom: 35px;
+}
+.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer .pq-access-meter-link {
+  display: block;
+}
+.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer .pq-welcome-links {
+  padding-bottom: 30px;
+  line-height: 17px;
+}
+/* Access Meter count */
+.pq-access-meter-modal-count {
+  max-width: 527px;
+}
+.pq-access-meter-modal-count .pq-access-welcome-header {
+  position: relative;
+  padding: 0 20px;
+}
+.pq-access-meter-modal-count .pq-access-welcome-header .pq-access-meter-close {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  line-height: 50px;
+  color: #000;
+}
+.pq-access-meter-modal-count .pq-access-body {
+  padding: 20px;
+  background: #252222;
+  color: #fff;
+}
+.pq-access-meter-modal-count .pq-access-body > h1 {
+  margin-bottom: 15px;
+  font: bold 16px / normal Arial, sans-serif;
+  color: #fff;
+}
+.pq-access-meter-modal-count .pq-access-body > p {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+.pq-access-meter-modal-count .pq-access-body .pq-access-footer {
+  height: 47px;
+  padding-top: 25px;
+}
+.pq-access-meter-modal-count .pq-access-body .pq-access-footer .pq-access-meter-btn {
+  float: right;
+}
+.pq-access-meter-modal-count .pq-access-body .pq-access-footer a.pq-access-meter-link {
+  display: block;
+  line-height: inherit;
+}
+/* Access Meter limit */
+.pq-access-meter-modal-limit {
+  max-width: 527px;
+}
+.pq-access-meter-modal-limit .pq-access-limit-header {
+  padding: 29px 38px;
+  background: #252222;
+  color: #fff;
+}
+.pq-access-meter-modal-limit .pq-access-limit-header p {
+  margin-bottom: 48px;
+  font-size: 18px;
+  text-align: center;
+}
+.pq-access-meter-modal-limit .pq-access-limit-header h2 {
+  margin-bottom: 29px;
+  font-size: 36px;
+  line-height: normal;
+  font-style: normal;
+  font-weight: bold;
+  color: #ffffff;
+}
+.pq-access-meter-modal-limit .pq-access-limit-header h5 {
+  font-size: 22px;
+  font-weight: normal;
+  color: #fff;
+}
+.pq-access-meter-modal-limit .pq-access-limit-body {
+  padding: 23px 0;
+  text-align: center;
+  background: #fff;
+  background: -moz-linear-gradient(top, #b2b2b2 63%, #ffffff 63%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(63%, #b2b2b2), color-stop(63%, #ffffff));
+  background: -webkit-linear-gradient(top, #b2b2b2 63%, #ffffff 63%);
+  background: -o-linear-gradient(top, #b2b2b2 63%, #ffffff 63%);
+  background: -ms-linear-gradient(top, #b2b2b2 63%, #ffffff 63%);
+  background: linear-gradient(to bottom, #b2b2b2 63%, #ffffff 63%);
+}
+.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-hero-head {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-hero {
+  height: 221px;
+  margin-bottom: -10px;
+  vertical-align: middle;
+  display: inline;
+}
+.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-reasons {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0 38px;
+  list-style: none;
+}
+.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-reasons li {
+  width: 90px;
+  font: bold 11px / normal Arial, sans-serif;
+  text-align: center;
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer {
+  height: inherit;
+  padding: 0 38px;
+  background: #252222;
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer .pq-access-meter-link {
+  line-height: 93px;
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer .pq-access-meter-btn {
+  position: relative;
+  top: -50px;
+  float: right;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer .pq-limit-footer-container {
+  padding: 20px 0 20px 0;
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer .pq-limit-footer-container p {
+  color: white;
+}
+.pq-access-meter-modal-limit .pq-access-limit-footer .pq-limit-footer-container a.pq-access-meter-link {
+  line-height: inherit;
+  display: block;
+}
+/* MEDIA QUERIES */
+@media (max-width: 414px) and (max-height: 764px) {
+  .pq-access-meter-modal {
+    /* Access Meter welcome */
+    /* /Access Meter welcome */
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-welcome-header {
+    padding: 0 15px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body {
+    padding: 15px 15px 20px 15px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body > h1 {
+    margin-bottom: 15px;
+    padding-right: 20px;
+    font-size: 26px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body > p {
+    font-size: 18px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body > p:first-of-type {
+    margin-bottom: 20px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer {
+    padding-top: 30px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer .pq-access-btn {
+    margin-bottom: 25px;
+  }
+}
+@media (max-width: 414px), (max-height: 764px) {
+  .pq-access-meter-modal {
+    /* Access Meter limit */
+    /* /Access Meter limit */
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-header {
+    padding: 25px 19px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-header p {
+    margin-bottom: 24px;
+    text-align: left;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-header h2 {
+    margin-bottom: 18px;
+    font-size: 22px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-header h5 {
+    font-size: 18px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-body {
+    padding: 10px 0 15px 0;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-hero-head {
+    font-size: 14px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-hero {
+    height: 175px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-body .pq-access-limit-reasons {
+    padding: 0 15px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-footer {
+    padding: 0 19px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-limit .pq-access-limit-footer .pq-access-meter-link {
+    line-height: 73px;
+  }
+}
+@media (max-width: 320px), (max-height: 568px) {
+  .pq-modal-content .pq-modal-wrap-container.pq-modal-roadblock-container .pq-access-limit-footer .pq-access-meter-btn {
+    right: -10px;
+  }
+  .pq-modal-content .pq-modal-wrap-container.pq-modal-roadblock-container,
+  .pq-modal-content .pq-modal-wrap-container.pq-modal-welcome-container {
+    top: 0;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-header {
+    padding: 20px 19px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-header p {
+    margin-bottom: 20px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-header h2 {
+    margin-bottom: 13px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-body .pq-access-limit-hero {
+    height: 150px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-body .pq-access-limit-reasons {
+    padding: 0 7px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-body .pq-access-limit-reasons li {
+    font-size: 10px;
+  }
+}
+@media (max-width: 320px) and (max-height: 480px) {
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-body .pq-access-limit-reasons {
+    padding: 0;
+  }
+}
+@media (max-width: 399px) {
+  .pq-modal-content .pq-modal-wrap-container.pq-modal-roadblock-container .pq-access-limit-footer .pq-access-meter-btn {
+    padding: 10px 4px;
+    font-size: 13px;
+  }
+}
+@media (max-height: 400px) {
+  .pq-modal-content .pq-modal-wrap-container {
+    position: absolute;
+  }
+}
+@media (max-width: 599px) {
+  .pq-modal-content .pq-modal-wrap-container.pq-modal-roadblock-container {
+    top: 0%;
+  }
+  .pq-modal-sticky .pq-access-meter-modal-count .pq-access-body .pq-access-footer {
+    height: 153px;
+    padding-top: 0px;
+  }
+  .pq-modal-sticky .pq-access-meter-modal-count .pq-access-body .pq-access-footer .pq-access-meter-btn {
+    float: inherit;
+    left: 50%;
+    position: relative;
+    margin: -80px;
+    top: 115px;
+  }
+}
+@media (min-width: 600px) {
+  .pq-access-meter-modal-welcome .pq-access-body footer.pq-access-footer .pq-welcome-links {
+    display: inline-block;
+    text-align: initial;
+  }
+  .pq-access-meter-modal-welcome .pq-access-body footer.pq-access-footer #pq-welcome-continue {
+    margin-left: 100px;
+    position: relative;
+    top: -16px;
+  }
+}
+@media (max-width: 320px), (max-height: 512px) {
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body > h1 {
+    font-size: 25px;
+    word-wrap: normal;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body > p {
+    font-size: 17px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer {
+    padding-top: 25px;
+  }
+  .pq-access-meter-modal.pq-access-meter-modal-welcome .pq-access-body .pq-access-footer .pq-welcome-links {
+    padding-bottom: 25px;
+  }
+  .pq-modal-content .pq-modal-wrap-container .pq-access-limit-body .pq-access-limit-hero {
+    height: 130px;
+  }
+}

@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         els: 'style'
       },
       wrap: {
-        dest: 'build/wrap.css'
+        dest: 'dist/wrap.css'
       }
     },
 
@@ -148,7 +148,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Scrape the wrap
-  grunt.registerTask('scrape', ['scrapejs', 'scrapehtml', 'uglify']);
+  grunt.registerTask('scrape', ['scrapejs', 'scrapehtml', 'scrapecss', 'uglify']);
 
   // Run functional tests on scraped wrap code
   grunt.registerTask('testwrap', ['express:testserver', 'intern']);
