@@ -217,10 +217,10 @@ module.exports = function(grunt) {
         options: {
           message: {
             from: 'wrap-wrap',
-            subject: 'wrap-wrap successfully updated'
+            subject: 'wrap-wrap successfully updated',
+            html: grunt.file.read('status/email.html')
           }
-        },
-        src: ['status/email.html']
+        }
       },
 
       failure: {
@@ -228,10 +228,10 @@ module.exports = function(grunt) {
           message: {
             from: 'wrap-wrap',
             subject: 'wrap-wrap failure',
-            priority: 'high'
+            priority: 'high',
+            html: grunt.file.read('status/email.html')
           }
-        },
-        src: ['status/email.html']
+        }
       }
     }
 
