@@ -7,6 +7,31 @@ define([
 
   registerSuite(function() {
 
+    /**
+     * Return a functional test function that asserts a modal isn't
+     * shown on the {nth} {premium} pageview.
+     *
+     * @param {Number} nth - the pageview number we're testing; ex: passing
+     *   2 would test that there's no modal on the second pageview
+     * @param {boolean} premium - whether to test premium pageviews or free
+     *   ones
+     * @param {string} ordinal - an ordinal version of the {nth} param, used
+     *   to build the assertion language
+     * @return {function} - the test function
+     */
+    function noModalTest(nth, premium, ord) {
+      return function() {
+        return page
+          .setPremium(premium)
+          .doPageviews(nth - 1)
+          .noModals(page.getPage())
+          .then(function(noModals) {
+            assert.isTrue(noModals,
+              'There should be no modals on the ' + ord + ' premium pageview.');
+          });
+      };
+    }
+
     var page;
 
     return {
@@ -21,78 +46,14 @@ define([
         page.reset();
       },
 
-      '2nd premium pageview': function() {
-        return page
-          .doPageviews(1)
-          .noModals(page.getPage())
-          .then(function(noModals) {
-            assert.isTrue(noModals,
-              'There should be no modals on the 2nd premium pageview.');
-          });
-      },
+      '2nd premium pageview': noModalTest(2, true, '2nd'),
+      '3rd premium pageview': noModalTest(3, true, '3rd'),
+      '5th premium pageview': noModalTest(5, true, '5th'),
 
-      '3rd premium pageview': function() {
-        return page
-          .doPageviews(2)
-          .noModals(page.getPage())
-          .then(function(noModals) {
-            assert.isTrue(noModals,
-              'There should be no modals on the 2nd premium pageview.');
-          });
-      },
-
-      '5th premium pageview': function() {
-        return page
-          .doPageviews(4)
-          .noModals(page.getPage())
-          .then(function(noModals) {
-            assert.isTrue(noModals,
-              'There should be no modals on the 2nd premium pageview.');
-          });
-      },
-
-      '1st free pageview': function() {
-        return page
-          .setPremium(false)
-          .noModals(page.getPage())
-          .then(function(noModals) {
-            assert.isTrue(noModals,
-              'There should be no modals on the 1st free pageview.');
-          });
-      },
-
-      '2nd free pageview': function() {
-        return page
-          .setPremium(false)
-          .doPageviews(1)
-          .noModals(page.getPage())
-          .then(function(noModals) {
-            assert.isTrue(noModals,
-              'There should be no modals on the 2nd free pageview.');
-          });
-      },
-
-      '3rd free pageview': function() {
-        return page
-          .setPremium(false)
-          .doPageviews(2)
-          .noModals(page.getPage())
-          .then(function(noModals) {
-            assert.isTrue(noModals,
-              'There should be no modals on the 3rd free pageview.');
-          });
-      },
-
-      '4th free pageview': function() {
-        return page
-          .setPremium(false)
-          .doPageviews(3)
-          .noModals(page.getPage())
-          .then(function(noModals) {
-            assert.isTrue(noModals,
-              'There should be no modals on the 4th free pageview.');
-          });
-      }
+      '1st free pageview': noModalTest(1, false, '1st'),
+      '2nd free pageview': noModalTest(2, false, '2nd'),
+      '3rd free pageview': noModalTest(3, false, '3rd'),
+      '4th free pageview': noModalTest(4, false, '4th')
 
     };
 

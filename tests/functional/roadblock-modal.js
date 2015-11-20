@@ -50,10 +50,6 @@ define([
             assert.isTrue(visible,
               'The roadblock modal should show on the 6th premium pageview');
           })
-          .takeScreenshot()
-          .then(function (data) {
-            fs.writeFileSync('tests/screenshots/test-5.png', data);
-          })
           .end();
       }
 
