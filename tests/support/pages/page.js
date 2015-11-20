@@ -122,7 +122,7 @@ define([
    */
   Page.prototype._getPath = function(n) {
     var dir = this._premium ? 'premiumtest' : 'freetest';
-    return require.toUrl('tests/support/' + dir + '/' + n + '.html');
+    return 'http://localhost:3001/' + dir + '/' + n + '.html';
   };
 
   return Page;

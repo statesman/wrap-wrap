@@ -10,4 +10,4 @@
 
 #### Running functional tests on wrap code
 - `chromedriver --port=4444 --url-base=wd/hub`
-- `grunt intern`
+- `grunt testwrap`

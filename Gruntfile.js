@@ -14,8 +14,6 @@ module.exports = function(grunt) {
           'common/premium/js/cmg-header.js',
           'common/premium/js/jquery.placeholder.min.js',
           'common/lib/lazythumbs/js/lazythumbs.js',
-          'common/javascript/writeCapture.js',
-          'common/javascript/jquery.writeCapture.js'
         ],
         contentBlacklist: [
           'var googletag = googletag || {},'
@@ -85,6 +83,7 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
+        mangle: false,
         compress: true,
         report: 'gzip',
         preserveComments: false,
@@ -111,9 +110,18 @@ module.exports = function(grunt) {
     // An Express.js server that serves up the test page
     // so we can do manual testing
     express: {
+      options: {
+        bases: ['tests/support/', 'dist/']
+      },
       testpage: {
         options: {
-          bases: 'tests/support/'
+          port: 3000,
+          open: true
+        }
+      },
+      testserver: {
+        options: {
+          port: 3001
         }
       }
     }
@@ -128,8 +136,12 @@ module.exports = function(grunt) {
   // Load our custom wrap-wrap tasks
   grunt.loadTasks('tasks');
 
+  // Scrape the wrap
   grunt.registerTask('scrape', ['scrapejs', 'scrapehtml', 'uglify']);
 
+  // Run functional tests on scraped wrap code
+  grunt.registerTask('testwrap', ['express:testserver', 'intern']);
+
   // Display the test page at http://localhost:3000/
-  grunt.registerTask('testpage', ['express', 'express-keepalive']);
+  grunt.registerTask('testpage', ['express:testpage', 'express-keepalive']);
 };
