@@ -3,6 +3,9 @@ module.exports = function(grunt) {
 
     wrapUrl: 'http://www.mystatesman.com/api/wraps/v1/wrap/1487/?format=html',
 
+    // Read in our API keys, passwords, etc.
+    secrets: grunt.file.readJSON('secrets.json'),
+
     // Download all the <script> tags
     scrapejs: {
       options: {
@@ -128,7 +131,7 @@ module.exports = function(grunt) {
         options: {
           runType: 'runner',
           config: 'tests/intern',
-          reporters: [ 'Console' ]
+          reporters: ['Console']
         }
       }
     },
@@ -153,25 +156,31 @@ module.exports = function(grunt) {
     },
 
     // Upload our compiled files to Amazon S3
-    aws: grunt.file.readJSON('aws-credentials.json'),
-
     s3: {
       options: {
-        accessKeyId: "<%= aws.accessKeyId %>",
-        secretAccessKey: "<%= aws.secretAccessKey %>",
+        accessKeyId: "<%= secrets.aws.accessKeyId %>",
+        secretAccessKey: "<%= secrets.aws.secretAccessKey %>",
         bucket: 'wrap.hookem.com',
         region: 'us-west-2'
       },
       wrap: {
         cwd: 'dist/',
         src: '**'
+      },
+      screenshots: {
+        options: {
+          cacheTTL: 0
+        },
+        cwd: 'tests/screenshots/',
+        src: '*.png',
+        dest: "screenshots/"
       }
     },
 
     cloudfront: {
       options: {
-        accessKeyId: "<%= aws.accessKeyId %>",
-        secretAccessKey: "<%= aws.secretAccessKey %>",
+        accessKeyId: "<%= secrets.aws.accessKeyId %>",
+        secretAccessKey: "<%= secrets.aws.secretAccessKey %>",
         distributionId: 'E3MN41DCETNLZ0'
       },
       wrap: {
@@ -183,6 +192,47 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+
+    // Send an email after running the wrap script
+    nodemailer: {
+      options: {
+        transport: {
+          type: 'SMTP',
+          options: {
+            service: 'Gmail',
+            auth: {
+              user: 'statcomdata@gmail.com',
+              pass: "<%= secrets.gmail.password %>"
+            }
+          }
+        },
+        recipients: [{
+          email: 'achavez@statesman.com',
+          name: 'Andrew Chavez'
+        }]
+      },
+
+      success: {
+        options: {
+          message: {
+            from: 'wrap-wrap',
+            subject: 'wrap-wrap successfully updated'
+          }
+        },
+        src: ['status/email.html']
+      },
+
+      failure: {
+        options: {
+          message: {
+            from: 'wrap-wrap',
+            subject: 'wrap-wrap failure',
+            priority: 'high'
+          }
+        },
+        src: ['status/email.html']
+      }
     }
 
   });
@@ -193,6 +243,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-aws');
+  grunt.loadNpmTasks('grunt-nodemailer');
 
   // Load our custom wrap-wrap tasks
   grunt.loadTasks('tasks');
@@ -207,5 +258,9 @@ module.exports = function(grunt) {
   grunt.registerTask('testpage', ['express:mantestserver', 'express-keepalive']);
 
   // Our master task that scrapes the wrap, then tests it
-  grunt.registerTask('wrap', ['scrape', 'testwrap', 's3', 'cloudfront']);
+  grunt.registerTask('wrap', ['scrape', 'testwrap', 's3:wrap', 'cloudfront']);
+
+  // Tasks that are run on success/failure
+  grunt.registerTask('success', ['s3:screenshots', 'nodemailer:success']);
+  grunt.registerTask('failure', ['s3:screenshots', 'nodemailer:failure']);
 };

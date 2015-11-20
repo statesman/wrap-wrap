@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Tooling to scrape JS, CSS and HTML from a Medley URL, test it and upload the results to Amazon S3.",
   "scripts": {
-    "start": "grunt wrap",
+    "start": "grunt wrap && grunt success || grunt failure",
     "test": "grunt scrape && grunt testwrap"
   },
   "repository": {
@@ -25,6 +25,7 @@
     "grunt-contrib-less": "^1.1.0",
     "grunt-contrib-uglify": "^0.10.1",
     "grunt-express": "^1.4.1",
+    "grunt-nodemailer": "^0.3.0",
     "html-minifier": "^1.0.0",
     "intern": "^3.0.6",
     "sync-request": "^2.1.0"
