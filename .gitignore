@@ -80,7 +80,7 @@ Temporary Items
 
 
 ### App data ###
-build/
+build/*.*s
+dist/*.*s
 tests/screenshots/*.png
 secrets.json
-dist/
