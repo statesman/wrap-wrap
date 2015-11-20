@@ -83,19 +83,17 @@ module.exports = function(grunt) {
       }
     },
 
-    concat: {
+    uglify: {
       options: {
-        stripBanners: true,
+        compress: true,
+        report: 'gzip',
+        preserveComments: false,
       },
-      'access-meter': {
-        src: ['build/access-meter.js', 'overrides/hookem-access-meter.js'],
-        dest: 'dist/access-meter.js',
-        nonull: true
-      },
-      wrap: {
-        src: ['build/wrap.js', 'build/markup.js', 'overrides/hookem-wrap.js'],
-        dest: 'dist/wrap.js',
-        nonull: true
+      hookem: {
+        files: {
+          'dist/access-meter.js': ['build/access-meter.js', 'overrides/hookem-access-meter.js'],
+          'dist/wrap.js': ['build/wrap.js', 'build/markup.js', 'overrides/hookem-wrap.js']
+        }
       }
     },
 
@@ -125,12 +123,12 @@ module.exports = function(grunt) {
   // Load packaged tasks
   grunt.loadNpmTasks('intern');
   grunt.loadNpmTasks('grunt-express');
-  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Load our custom wrap-wrap tasks
   grunt.loadTasks('tasks');
 
-  grunt.registerTask('scrape', ['scrapejs', 'scrapehtml', 'concat']);
+  grunt.registerTask('scrape', ['scrapejs', 'scrapehtml', 'uglify']);
 
   // Display the test page at http://localhost:3000/
   grunt.registerTask('testpage', ['express', 'express-keepalive']);
