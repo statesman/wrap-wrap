@@ -107,16 +107,16 @@ module.exports = function(grunt) {
       }
     },
 
-    // An Express.js server that serves up the test page
-    // so we can do manual testing
+    // An Express.js app that serves up a test page
+    // for manual testing and automated functional tests
     express: {
       options: {
-        bases: ['tests/support/', 'dist/']
+        server: 'tests/support/testserver/app'
       },
       testpage: {
         options: {
           port: 3000,
-          open: true
+          open: 'http://localhost:3000/free/1/'
         }
       },
       testserver: {

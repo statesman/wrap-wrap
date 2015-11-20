@@ -121,8 +121,8 @@ define([
    *   directory
    */
   Page.prototype._getPath = function(n) {
-    var dir = this._premium ? 'premiumtest' : 'freetest';
-    return 'http://localhost:3001/' + dir + '/' + n + '.html';
+    var dir = this._premium ? 'premium' : 'free';
+    return 'http://localhost:3001/' + dir + '/' + n + '/';
   };
 
   return Page;
