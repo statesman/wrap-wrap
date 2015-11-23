@@ -14,6 +14,21 @@
   $ sudo hostile set 127.0.0.1 local-dev.mystatesman.com
   ```
 
+3. Add a secrets.json file to the project root with site login information and AWS keys:
+
+  ```json
+  {
+    "aws": {
+      "accessKeyId": "~ AWS ACCESS KEY ~",
+      "secretAccessKey": "~ AWS SECRET KEY ~"
+    },
+    "login": {
+      "username": "~ MYSTATESMAN.COM USERNAME ~",
+      "password": "~ MYSTATESMAN.COM PASSWORD ~"
+    }
+  }
+  ```
+
 #### Scraping the wrap
 - `grunt scrape`
 

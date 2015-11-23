@@ -1,7 +1,8 @@
 define([
   'require',
-  'intern/dojo/Promise'
-], function(require, Promise) {
+  'intern/dojo/Promise',
+  'intern/dojo/node!fs'
+], function(require, Promise, fs) {
 
   /**
    * A page object that allows us to simulate a user
@@ -64,16 +65,21 @@ define([
 
   /**
    * Reset the pageview counter and all browser session data; should
-   *   be run in beforeEach
+   *   be run in afterEach
    */
   Page.prototype.reset = function() {
     this._premium = true;
     this._pageviews = 1;
 
-    return this.remote
-      .clearCookies()
-      .clearLocalStorage()
-      .clearSessionStorage();
+    var self = this;
+
+    return Promise.all([
+      this.remote.clearLocalStorage().promise,
+      this.remote.clearSessionStorage().promise,
+      this.remote.clearCookies().promise
+    ]).then(function() {
+      return self.remote.refresh().promise;
+    });
   };
 
   /**
@@ -103,15 +109,50 @@ define([
       .isDisplayed()
       .promise;
 
+    var janrainVisible = currentPage
+      .setFindTimeout(5000)
+      .findById('janrainModal')
+      .isDisplayed()
+      .promise;
+
     return Promise.all([
       welcomeVisible,
       upsellVisible,
-      roadblockVisible
+      roadblockVisible,
+      //janrainVisible
     ]).then(function(results){
       return results[0] === results[1] === results[2] === false;
     });
   };
 
+
+  Page.prototype.login = function(loginButton) {
+    var creds = JSON.parse(fs.readFileSync('secrets.json').toString());
+
+    var self = this;
+
+    return this.getPage()
+      .setFindTimeout(5000)
+      .findByCssSelector(loginButton)
+        .click()
+        .end()
+      .setFindTimeout(5000)
+      .findDisplayedById('capture_signIn_traditionalSignIn_emailAddress')
+        .click()
+        .type(creds.login.username)
+        .end()
+      .findById('capture_signIn_traditionalSignIn_password')
+        .click()
+        .type(creds.login.password)
+        .end()
+      .findById('capture_signIn_traditionalSignIn_signInButton')
+        .click()
+        .end()
+      .sleep(10000)
+      .then(function() {
+        return self.noModals(self.remote);
+      });
+  };
 
   /**
    * Return a path to the appropriate test file

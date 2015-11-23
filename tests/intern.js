@@ -28,7 +28,8 @@ define({
 		'tests/functional/welcome-modal',
 		'tests/functional/upsell-modal',
 		'tests/functional/roadblock-modal',
-		'tests/functional/no-modals'
+		'tests/functional/no-modals',
+		'tests/functional/login'
 	],
 
 	// A regular expression matching URLs to files that should not be included in code coverage analysis

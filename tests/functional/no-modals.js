@@ -42,8 +42,8 @@ define([
         page = new Page(this.remote);
       },
 
-      beforeEach: function() {
-        page.reset();
+      afterEach: function() {
+        return page.reset();
       },
 
       '2nd premium pageview': noModalTest(2, true, '2nd'),

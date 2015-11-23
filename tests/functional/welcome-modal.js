@@ -17,8 +17,8 @@ define([
         page = new Page(this.remote);
       },
 
-      beforeEach: function() {
-        page.reset();
+      afterEach: function() {
+        return page.reset();
       },
 
       'shows on 1st page': function() {
