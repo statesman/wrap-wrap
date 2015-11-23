@@ -122,7 +122,7 @@ define([
    */
   Page.prototype._getPath = function(n) {
     var dir = this._premium ? 'premium' : 'free';
-    return 'http://localhost:3001/' + dir + '/' + n + '/';
+    return 'http://local-dev.mystatesman.com:3001/' + dir + '/' + n + '/';
   };
 
   return Page;

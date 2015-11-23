@@ -147,7 +147,7 @@ module.exports = function(grunt) {
       mantestserver: {
         options: {
           port: 3000,
-          open: 'http://localhost:3000/free/1/'
+          open: 'http://local-dev.mystatesman.com:3000/free/1/'
         }
       },
       functestserver: {
