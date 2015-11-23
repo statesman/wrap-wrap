@@ -166,14 +166,6 @@ module.exports = function(grunt) {
       wrap: {
         cwd: 'dist/',
         src: '**'
-      },
-      screenshots: {
-        options: {
-          cacheTTL: 0
-        },
-        cwd: 'tests/screenshots/',
-        src: '*.png',
-        dest: "screenshots/"
       }
     },
 
@@ -192,47 +184,6 @@ module.exports = function(grunt) {
           ]
         }
       }
-    },
-
-    // Send an email after running the wrap script
-    nodemailer: {
-      options: {
-        transport: {
-          type: 'SMTP',
-          options: {
-            service: 'Gmail',
-            auth: {
-              user: 'statcomdata@gmail.com',
-              pass: "<%= secrets.gmail.password %>"
-            }
-          }
-        },
-        recipients: [{
-          email: 'achavez@statesman.com',
-          name: 'Andrew Chavez'
-        }]
-      },
-
-      success: {
-        options: {
-          message: {
-            from: 'wrap-wrap',
-            subject: 'wrap-wrap successfully updated',
-            html: grunt.file.read('status/email.html')
-          }
-        }
-      },
-
-      failure: {
-        options: {
-          message: {
-            from: 'wrap-wrap',
-            subject: 'wrap-wrap failure',
-            priority: 'high',
-            html: grunt.file.read('status/email.html')
-          }
-        }
-      }
     }
 
   });
@@ -243,7 +194,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-aws');
-  grunt.loadNpmTasks('grunt-nodemailer');
 
   // Load our custom wrap-wrap tasks
   grunt.loadTasks('tasks');
@@ -261,6 +211,6 @@ module.exports = function(grunt) {
   grunt.registerTask('wrap', ['scrape', 'testwrap', 's3:wrap', 'cloudfront']);
 
   // Tasks that are run on success/failure
-  grunt.registerTask('success', ['s3:screenshots', 'nodemailer:success']);
-  grunt.registerTask('failure', ['s3:screenshots', 'nodemailer:failure']);
+  // grunt.registerTask('success', []);
+  // grunt.registerTask('failure', []);
 };
