@@ -73,7 +73,7 @@ define([
 
       'login works from roadblock modal': function() {
         return page
-          .doPageviews(5)
+          .doPageviews(6)
           .login('#pq-passage-quota-block .pq-access-meter-link.cmOpenJanrainModal.pq-modal-subscriber-link')
           .then(function(noModals) {
             assert.isTrue(noModals,

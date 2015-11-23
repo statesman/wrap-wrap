@@ -73,13 +73,19 @@ define([
 
     var self = this;
 
-    return Promise.all([
-      this.remote.clearLocalStorage().promise,
-      this.remote.clearSessionStorage().promise,
-      this.remote.clearCookies().promise
+    var deferred = new Promise.Deferred();
+
+    Promise.all([
+      this.remote.clearLocalStorage(),
+      this.remote.clearSessionStorage(),
+      this.remote.clearCookies()
     ]).then(function() {
-      return self.remote.refresh().promise;
+      self.remote.refresh().then(function() {
+        deferred.resolve(true);
+      });
     });
+
+    return deferred.promise;
   };
 
   /**
