@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     // Set defaults
     var options = this.options({
       makeJs: function(markup) {
-        return 'document.write(' + markup + ');';
+        return "document.write('" + markup + "');";
       },
       processHtml: function(markup) {
         return markup;

@@ -59,7 +59,6 @@ module.exports = function(grunt) {
       options: {
         els: [
           //Janraid markup
-          '#flatpage_frame',
           '#returnSocial',
           '#returnTraditional',
           '#socialRegistration',
@@ -73,6 +72,9 @@ module.exports = function(grunt) {
           '#traditionalAuthenticateMerge',
           '#resendVerification',
           '#resendVerificationSuccess',
+          '#pq-passage-quota-block',
+          '#pq-passage-quota-sticky',
+          '#pq-passage-quota-welcome',
           // Not in the CMG docs, but required
           '#signIn'
         ],
