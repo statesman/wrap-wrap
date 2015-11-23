@@ -6,9 +6,6 @@ define({
 	// specified browser environments in the `environments` array below as well. See
 	// <https://theintern.github.io/intern/#option-capabilities> for links to the different capabilities options for
 	// different services.
-	//
-	// Note that the `build` capability will be filled in with the current commit ID or build tag from the CI
-	// environment automatically
 	capabilities: [{ browserName: 'chrome' }],
 
 	// Browsers to run integration testing against. Note that version numbers must be strings if used with Sauce
@@ -17,7 +14,7 @@ define({
 	environments: [{ browserName: 'chrome' }],
 
 	// Maximum number of simultaneous integration tests that should be executed on the remote WebDriver service
-	// maxConcurrency: 2,
+	maxConcurrency: 2,
 
 	// Name of the tunnel class to use for WebDriver tests.
 	// See <https://theintern.github.io/intern/#option-tunnel> for built-in options

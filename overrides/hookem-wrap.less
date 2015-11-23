@@ -4,6 +4,14 @@
   @import '../build/wrap.less';
 }
 
+// ~ Deal with conflicts between wrap modals and Bootstrap ~ //
+
+@media (min-width: 1200px) {
+  #janrainModal .col-lg-4 {
+    width: 100%;
+  }
+}
+
 // ~ Modal styles pulled from minimalist.css ~ //
 
 .pq-modal-content {

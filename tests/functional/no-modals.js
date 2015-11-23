@@ -57,7 +57,7 @@ define([
 
       /**
        * A hacky test that doesn't really assert anything and just
-       * makes an assertion for our status report
+       * makes a screenshot for our status report
        */
       '1st free pageview (screenshot)': function() {
         return page
