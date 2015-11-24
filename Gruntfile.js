@@ -133,7 +133,7 @@ module.exports = function(grunt) {
         options: {
           runType: 'runner',
           config: 'tests/intern',
-          reporters: ['Runner']
+          reporters: ['Pretty']
         }
       }
     },
