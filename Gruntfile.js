@@ -57,32 +57,7 @@ module.exports = function(grunt) {
     // Scrape markup from the page and save it as JavaScript
     scrapehtml: {
       options: {
-        els: [
-          //Janraid markup
-          '#returnSocial',
-          '#returnTraditional',
-          '#socialRegistration',
-          '#traditionalRegistration',
-          '#traditionalRegistrationBlank',
-          '#registrationSuccess',
-          '#registrationSuccessConfirmed',
-          '#forgotPassword',
-          '#forgotPasswordSuccess',
-          '#mergeAccounts',
-          '#traditionalAuthenticateMerge',
-          '#resendVerification',
-          '#resendVerificationSuccess',
-          '#pq-passage-quota-block',
-          '#pq-passage-quota-sticky',
-          '#pq-passage-quota-welcome',
-          // Not in the CMG docs, but required
-          '#signIn'
-        ],
-        processHtml: function(markup) {
-          markup.unshift('<!-- Begin CMG wrap -->\n<div id="#cmg-wrap-aas">');
-          markup.push('</div>\n<!-- End CMG wrap -->');
-          return markup;
-        },
+        url: "<%= wrapUrl %>",
         makeJs: function(markup) {
           return 'cmg.query.holdReady(true);' +
             'cmg.query("body").append(\'' +
@@ -93,9 +68,36 @@ module.exports = function(grunt) {
       },
       markup: {
         options: {
-          url: "<%= wrapUrl %>"
+          els: [
+            //Janraid markup
+            '#returnSocial',
+            '#returnTraditional',
+            '#socialRegistration',
+            '#traditionalRegistration',
+            '#traditionalRegistrationBlank',
+            '#registrationSuccess',
+            '#registrationSuccessConfirmed',
+            '#forgotPassword',
+            '#forgotPasswordSuccess',
+            '#mergeAccounts',
+            '#traditionalAuthenticateMerge',
+            '#resendVerification',
+            '#resendVerificationSuccess',
+            // Not in the CMG docs, but required
+            '#signIn'
+          ]
         },
         dest: 'build/markup.js'
+      },
+      modals: {
+        options: {
+          els: [
+            '#pq-passage-quota-block',
+            '#pq-passage-quota-sticky',
+            '#pq-passage-quota-welcome'
+          ]
+        },
+        dest: 'build/modals.js'
       }
     },
 
@@ -110,7 +112,8 @@ module.exports = function(grunt) {
       hookem: {
         files: {
           'dist/access-meter.js': ['build/access-meter.js', 'overrides/hookem-access-meter.js'],
-          'dist/wrap.js': ['build/wrap.js', 'build/markup.js', 'overrides/hookem-wrap.js']
+          'dist/wrap.js': ['build/wrap.js', 'build/markup.js', 'overrides/hookem-wrap.js'],
+          'dist/modals.js': 'build/modals.js'
         }
       }
     },

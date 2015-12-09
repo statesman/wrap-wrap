@@ -30,7 +30,7 @@
 
     <div class="jumbotron">
       <h1><%= type.charAt(0).toUpperCase() + type.slice(1) %> pageview #<%= count %></h1>
-      <p class="lead">This page includes the <a href="/wrap.js" target="_blank">wrap</a> and <a href="/access-meter.js" target="_blank">access meter</a> code from the <code>dist/</code> folder in the project root with <code>wrap.premium</code> set to <code><%- premium %></code>.</p>
+      <p class="lead">This page includes the <a href="/wrap.js" target="_blank">wrap</a>, <a href="/access-meter.js" target="_blank">access meter</a> and <a href="/modals.js" target="_blank">modal</a> code from the <code>dist/</code> folder in the project root with <code>wrap.premium</code> set to <code><%- premium %></code>.</p>
       <div class="btn-group btn-group-lg" role="group">
         <a class="btn btn-lg btn-success<% if(count <= 1) { %> disabled<% } %>" href="/<%= type %>/<%= (count - 1) %>/" role="button">Previous</a>
         <% if(premium) { %>
@@ -58,6 +58,7 @@
       </div>
     </div>
 
+    <script src="/modals.js"></script>
     <script src="/access-meter.js"></script>
 
     <script>
