@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         els: 'style'
       },
       wrap: {
-        dest: 'build/wrap.less'
+        dest: 'build/wrap.css'
       }
     },
 
@@ -122,7 +122,7 @@ module.exports = function(grunt) {
       },
       wrap: {
         files: {
-          'dist/wrap.css': 'overrides/hookem-wrap.less'
+          'dist/wrap.css': 'overrides/wrap.less'
         }
       }
     },
