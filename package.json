@@ -26,6 +26,7 @@
     "grunt-contrib-less": "^1.1.0",
     "grunt-contrib-uglify": "^0.10.1",
     "grunt-express": "^1.4.1",
+    "grunt-wrap-scrape": "git+https://github.com/statesman/grunt-wrap-scrape.git",
     "html-minifier": "^1.0.0",
     "intern": "^3.0.6",
     "sync-request": "^2.1.0"

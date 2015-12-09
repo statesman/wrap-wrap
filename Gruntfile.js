@@ -196,9 +196,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-aws');
-
-  // Load our custom wrap-wrap tasks
-  grunt.loadTasks('tasks');
+  grunt.loadNpmTasks('grunt-wrap-scrape');
 
   // Scrape the wrap
   grunt.registerTask('scrape', ['scrapejs', 'scrapehtml', 'uglify', 'scrapecss', 'less']);
