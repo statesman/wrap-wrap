@@ -79,8 +79,8 @@ Temporary Items
 .apdisk
 
 
-### Project configuration, data ###
-
-conf.yml
-.ftppass
-bundled/
+### App data ###
+build/*.*s
+dist/*.*s
+tests/screenshots/*.png
+secrets.json

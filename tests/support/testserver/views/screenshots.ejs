@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Screenshots for functional tests</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Screenshots</h1>
+      <hr />
+      <div class="row">
+        <% screenshots.forEach(function(image) { %>
+          <div class="col-xs-12 col-sm-6 col-lg-4">
+            <p>
+              <a href="<%= image %>" target="_blank">
+                <img class="img-responsive" src="<%= image %>" />
+              </a>
+            </p>
+          </div>
+        <% }); %>
+      </div>
+
+      <a class="btn btn-lg btn-primary" href="/free/1/" role="button">Return to test pages</a>
+    </div>
+  </div>
+</body>
+
+</html>
