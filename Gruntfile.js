@@ -109,7 +109,7 @@ module.exports = function(grunt) {
         report: 'gzip',
         preserveComments: false,
       },
-      hookem: {
+      wrap: {
         files: {
           'dist/access-meter.js': ['build/access-meter.js', 'overrides/access-meter.js'],
           'dist/wrap.js': ['build/wrap.js', 'build/markup.js', 'overrides/wrap.js'],
