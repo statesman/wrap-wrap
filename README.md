@@ -53,6 +53,68 @@ Subsets of the above can also be triggered using the included Grunt multitasks:
 
 **Important note:** Chromedriver must be running for Chromedriver to run functional tests. If `chromedriver` is in your `$PATH` should be able to start it using `chromedriver --port=4444 --url-base=wd/hub`.
 
+## Using the wrap
+
+To make use of all the wrap's functionality you'll need to include the output files on your page. Specifically:
+- include [*wrap.js*](http://wrap.hookem.com/wrap.js) as close as possible to the opening `<body>` tag (the distance between *wrap.js* and *access-meter.js* in your markup is essential to preventing race conditions from interfering with the wrap code)
+- include [*access-meter.js*](http://wrap.hookem.com/access-meter.js) as close as possible to the closing `<body>` tag
+- include [*wrap.css*](http://wrap.hookem.com/wrap.css) in the `<head>` of your page
+- **Optional:** include [*modals.js*](http://wrap.hookem.com/modals.js) below *wrap.js* to get the access meter modals; alternatively, you can include your own modals on the page
+
+#### Marking content as non-premium
+
+By default all content will be marked as premium and trigger the access meter. If you'd like to mark content as non-premium, create a `wrap` object and place it before any of your external wrap files:
+
+```js
+var wrap = {
+  premium: false
+}
+```
+
+#### Adding login/logout links
+
+It's also possible to add login/logout to your page. The wrap will look for a few key classes that you should include. For example:
+
+```html
+<a title="Log out" class="cmUserAuthed cmLogout capture_end_session" href="#">Log out</a>
+<a title="Log in" class="cmUserAnonymous cmOpenJanrainModal" href="#">Log in</a>
+```
+
+The default behavior on the minimalist wrap is to show both the login and logout links and hide the unneeded when a user's authentication status has been determined. It's possible to alter that behavior, so the login link shows initially and is swapped to the logout link if applicable:
+
+```css
+.cmLogout {
+  display: none;
+}
+```
+
+#### Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="path/to/wrap.css">
+    <script>
+    // Optional: Mark content as non-premium
+    var wrap = {
+      premium: false
+    };
+    </script>
+  </head>
+  <body>
+    <script src="path/to/wrap.js"></script>
+
+    <!-- Optional: You could use your own modals instead -->
+    <script src="path/to/modals.js"></script>
+
+    <!-- Your app's HTML -->
+
+    <script src="path/to/access-meter.js"></script>
+  </body>
+</html>
+```
+
 ## Copyright
 
 &copy; 2015 Austin American-Statesman
