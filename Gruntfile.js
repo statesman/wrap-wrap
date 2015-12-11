@@ -204,6 +204,9 @@ module.exports = function(grunt) {
   // Scrape the wrap
   grunt.registerTask('scrape', ['scrapejs', 'scrapehtml', 'uglify', 'scrapecss', 'less']);
 
+  // Upload the wrap to S3 and clear the CDN's cache
+  grunt.registerTask('upload', ['s3', 'cloudfront']);
+
   // Run functional tests on scraped wrap code
   grunt.registerTask('testwrap', ['express:functestserver', 'intern']);
 
@@ -211,7 +214,7 @@ module.exports = function(grunt) {
   grunt.registerTask('testpage', ['express:mantestserver', 'express-keepalive']);
 
   // Our master task that scrapes the wrap, then tests it
-  grunt.registerTask('wrap', ['scrape', 'testwrap', 's3:wrap', 'cloudfront']);
+  grunt.registerTask('wrap', ['scrape', 'testwrap', 'upload']);
 
   // Tasks that are run on success/failure
   // grunt.registerTask('success', []);
