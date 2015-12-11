@@ -33,5 +33,7 @@ if(typeof window.plate !== 'undefined') {
   /**
    * Use our own wrap object to set the premium status on pages
    */
-  window.plate.premium = wrap.premium;
+  if(typeof wrap !== 'undefined' && wrap.hasOwnProperty('premium')) {
+    window.plate.premium = wrap.premium;
+  }
 }
