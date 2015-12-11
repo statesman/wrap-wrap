@@ -111,8 +111,8 @@ module.exports = function(grunt) {
       },
       hookem: {
         files: {
-          'dist/access-meter.js': ['build/access-meter.js', 'overrides/hookem-access-meter.js'],
-          'dist/wrap.js': ['build/wrap.js', 'build/markup.js', 'overrides/hookem-wrap.js'],
+          'dist/access-meter.js': ['build/access-meter.js', 'overrides/access-meter.js'],
+          'dist/wrap.js': ['build/wrap.js', 'build/markup.js', 'overrides/wrap.js'],
           'dist/modals.js': 'build/modals.js'
         }
       }
