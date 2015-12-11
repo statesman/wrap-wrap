@@ -41,7 +41,7 @@ During a complete run of our Grunt tasks using `grunt wrap`, wrap-wrap would:
 
 1. Use the `scrapehtml` task to grab needed HTMl from the wrap and save it as injectable JavaScript in two files - one with the modals and one with everything else.
 2. Grab all inline styles with `scrapecss` and combine it with some other external stylesheets and overrides in the `less` task.
-3. Get JavaScript using the `scrapejs` task, uglify it and output it into four files - the access meter code, all other scraped JavaScript, injectable modals and other injectable HTML.
+3. Get JavaScript using the `scrapejs` task, combine it with our [overrides](overrides/), uglify it and output it into four files - the access meter code, all other scraped JavaScript, injectable modals and other injectable HTML.
 4. Run functional tests locally using Intern on the scraped files.
 5. Upload those files to Amazon S3 and invalidate the files in CloudFront's cache.
 
