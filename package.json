@@ -27,6 +27,7 @@
     "grunt-contrib-uglify": "^0.10.1",
     "grunt-express": "^1.4.1",
     "grunt-wrap-scrape": "statesman/grunt-wrap-scrape.git#v0.0.1",
-    "intern": "^3.0.6"
+    "intern": "^3.0.6",
+    "request": "^2.75.0"
   }
 }
